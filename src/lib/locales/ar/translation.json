@@ -1,0 +1,73 @@
+{
+    "header": {
+      "title": "مورد معدات صالونات التجميل المحترفة",
+      "cart": "سلة التسوق فارغة",
+      "cartTitle": "سلة التسوق الخاصة بك",
+      "viewCart": "عرض السلة",
+      "login": "تسجيل الدخول"
+    },
+    "home": {
+      "title": "H-VMC",
+      "subtitle": "جودة - ثقة - ابتكار - أناقة احترافية",
+      "searchPlaceholder": "ابحث عن المعدات المهنية..."
+    },
+    "auth": {
+      "login": {
+        "title": "تسجيل الدخول",
+        "email": "البريد الإلكتروني",
+        "emailPlaceholder": "بريدك@الإلكتروني.com",
+        "password": "كلمة المرور",
+        "passwordPlaceholder": "••••••",
+        "submit": "تسجيل الدخول",
+        "errors": {
+          "email": "الرجاء إدخال عنوان بريد إلكتروني صحيح",
+          "password": "يجب أن تحتوي كلمة المرور على الأقل على 6 أحرف"
+        }
+      },
+      "signup": {
+        "title": "إنشاء حساب",
+        "name": "الاسم",
+        "namePlaceholder": "اسمك",
+        "phone": "رقم الهاتف",
+        "phonePlaceholder": "+1 234 567 890",
+        "email": "البريد الإلكتروني",
+        "emailPlaceholder": "بريدك@الإلكتروني.com",
+        "password": "كلمة المرور",
+        "passwordPlaceholder": "••••••",
+        "submit": "إنشاء حساب",
+        "errors": {
+          "name": "يجب أن يحتوي الاسم على الأقل على حرفين",
+          "phone": "الرجاء إدخال رقم هاتف صحيح",
+          "email": "الرجاء إدخال عنوان بريد إلكتروني صحيح",
+          "password": "يجب أن تحتوي كلمة المرور على الأقل على 6 أحرف"
+        }
+      }
+    },
+    "categories": {
+      "Miroirs Led": "مرايا إضاءة LED",
+      "Caisse étagère": "خزانة أرفف",
+      "Chaise": "كرسي",
+      "Lave-tête": "حوض غسيل الشعر",
+      "Caisse comptoir": "خزينة حساب",
+      "Salon client": "صالة الانتظار",
+      "Chariot": "عربة",
+      "Support séchoir": "حامل مجفف شعر",
+      "Support tondeuse": "حامل ماكينة حلاقة",
+      "Tondeuse": "ماكينة حلاقة",
+      "Relax": "استرخاء",
+      "Tabouret": "مقعد",
+      "Valise": "حقيبة",
+      "Stérilisateur": "معقم",
+      "Accessoires chaise": "إكسسوارات الكرسي",
+      "Accessoires Lave-tête": "إكسسوارات حوض الغسيل",
+      "Vaposone": "فابوسون",
+      "led barber": "إضاءة حلاق LED",
+      "Hair vaccum": "مكنسة شفط الشعر",
+      "Ciseaux": "مقصات",
+      "Post de travail": "محطة عمل",
+      "Séchoir": "مجفف شعر",
+      "Lisseur": "مكواة فرد",
+      "Brosse": "فرشاة",
+      "Makup artist": "فنان مكياج"
+    }
+  }
