@@ -21,7 +21,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   
   return (
     <Card 
-      className="hover:shadow-lg transition-all duration-300 shadow-none border-0 group cursor-pointer"
+      className="hover:shadow-lg transition-all duration-300 shadow-none border-0 group cursor-pointer pt-0"
       onClick={() => navigate(`/product/${product.id}`)}
     >
       <CardContent className="p-0 flex flex-col h-full">

@@ -5,7 +5,6 @@ import logo from '@/assets/7-removebg-preview.png';
 import { useCart } from '../context/Cartcontext';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +16,7 @@ import { useState } from "react";
 
 export const Header = () => {
   const { cartCount, cartItems } = useCart();
-  const location = useLocation(); // Get current route location
+  const location = useLocation();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
@@ -25,7 +24,6 @@ export const Header = () => {
     i18n.changeLanguage(lng);
     document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
   };
-
 
   // SVG flags as React components
   const FrenchFlag = () => (
@@ -63,7 +61,7 @@ export const Header = () => {
               alt="H-VMC Logo" 
             />
             <span className="font-light text-sm hidden md:block text-zinc-300">
-              Fournisseur de matériel professionnel pour salons de coiffure
+              {t('header.title')}
             </span>
           </Link>
         </div>
@@ -92,11 +90,13 @@ export const Header = () => {
             >
               {cartCount === 0 ? (
                 <div className="text-center py-4">
-                  <p className="text-sm">Votre panier est vide</p>
+                  <p className="text-sm">{t('header.cart')}</p>
                 </div>
               ) : (
                 <>
-                  <h3 className="font-semibold mb-2">Votre Panier ({cartCount})</h3>
+                  <h3 className="font-semibold mb-2">
+                    {t('header.cartTitle')} ({cartCount})
+                  </h3>
                   <div className="space-y-3 max-h-60 overflow-y-auto">
                     {cartItems.map(item => (
                       <div key={item.id} className="flex gap-3 items-center">
@@ -117,7 +117,7 @@ export const Header = () => {
                   <div className="mt-4 pt-4 border-t border-zinc-700">
                     <Button asChild className="w-full" size="sm">
                       <Link to="/cart">
-                        Voir le panier
+                        {t('header.viewCart')}
                       </Link>
                     </Button>
                   </div>
@@ -126,42 +126,46 @@ export const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           <div>
-        <Button variant="outline" className="text-black cursor-pointer" onClick={() => setIsAuthModalOpen(true)}>
-          Login
-        </Button>
-      </div>
+            <Button 
+              variant="outline" 
+              className="text-black cursor-pointer" 
+              onClick={() => setIsAuthModalOpen(true)}
+            >
+              {t('header.login')}
+            </Button>
+          </div>
           {/* Language Switcher */}
           <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button 
-              variant="ghost" 
-              size="icon"
-              className="h-10 w-10 rounded-full hover:bg-white/10"
-              aria-label="Change language"
+            <DropdownMenuTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className="h-10 w-10 rounded-full hover:bg-white/10"
+                aria-label="Change language"
+              >
+                {i18n.language === 'ar' ? <AlgerianFlag /> : <FrenchFlag />}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent 
+              align="end" 
+              className="w-40 bg-zinc-900 border-zinc-700 text-white"
             >
-              {i18n.language === 'ar' ? <AlgerianFlag /> : <FrenchFlag />}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent 
-            align="end" 
-            className="w-40 bg-zinc-900 border-zinc-700 text-white"
-          >
-            <DropdownMenuItem 
-              className="flex items-center gap-2 hover:bg-zinc-800"
-              onClick={() => changeLanguage('fr')}
-            >
-              <FrenchFlag />
-              <span>Français</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="flex items-center gap-2 hover:bg-zinc-800"
-              onClick={() => changeLanguage('ar')}
-            >
-              <AlgerianFlag />
-              <span>العربية</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              <DropdownMenuItem 
+                className="flex items-center gap-2 hover:bg-zinc-800"
+                onClick={() => changeLanguage('fr')}
+              >
+                <FrenchFlag />
+                <span>Français</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                className="flex items-center gap-2 hover:bg-zinc-800"
+                onClick={() => changeLanguage('ar')}
+              >
+                <AlgerianFlag />
+                <span>العربية</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
@@ -169,10 +173,10 @@ export const Header = () => {
       {location.pathname === '/' && (
         <div className="container mx-auto px-4 py-12 flex flex-col items-center mt-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight text-center">
-            H-VMC
+            {t('home.title')}
           </h1>
           <p className="text-lg md:text-xl mb-8 text-center max-w-2xl text-zinc-300">
-            Qualité – Confiance – Innovation – Élégance professionnelle
+            {t('home.subtitle')}
           </p>
 
           {/* Search Bar */}
@@ -180,15 +184,15 @@ export const Header = () => {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400" />
             <Input
               type="search"
-              placeholder="Rechercher des équipements professionnels..."
+              placeholder={t('home.searchPlaceholder')}
               className="pl-10 py-6 rounded-full bg-zinc-100 border-0 focus-visible:ring-2 focus-visible:ring-primary/50 text-black"
             />
           </div>
 
           <AuthModal
-        open={isAuthModalOpen}
-        onOpenChange={setIsAuthModalOpen}
-      />
+            open={isAuthModalOpen}
+            onOpenChange={setIsAuthModalOpen}
+          />
         </div>
       )}
     </header>

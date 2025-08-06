@@ -1,24 +1,33 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import Backend from 'i18next-http-backend';
+
+// Import translations
+import translationFR from './locales/fr/translation.json';
+import translationAR from './locales/ar/translation.json';
 
 i18n
-  .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    ns: ['translation','categories'], // Make sure this includes all your namespaces
+    defaultNS: 'translation',
+
+    resources: {
+      fr: {
+        translation: translationFR
+      },
+      ar: {
+        translation: translationAR
+      }
+    },
     fallbackLng: 'fr',
-    debug: process.env.NODE_ENV === 'development',
     interpolation: {
-      escapeValue: false,
+      escapeValue: false
     },
     detection: {
       order: ['localStorage', 'navigator'],
       caches: ['localStorage']
-    },
-    backend: {
-      loadPath: '/locales/{{lng}}/translation.json',
     }
   });
 

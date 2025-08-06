@@ -13,17 +13,26 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useTranslation } from "react-i18next";
+import { authService } from "@/api/auth";
+import { useState } from "react";
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 const formSchema = z.object({
   email: z.string().email({
-    message: "Please enter a valid email address.",
+    message: "auth.login.errors.email",
   }),
   password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
+    message: "auth.login.errors.password",
   }),
 });
 
 export function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
+  const { t } = useTranslation();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,10 +41,26 @@ export function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    // Handle login logic here
-    if (onSuccess) onSuccess();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    try {
+      await authService.login(values);
+      
+      // Handle successful login
+      toast.success(t('auth.login.successMessage'));
+      
+      // Redirect or call success callback
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error(t('auth.login.errorMessage'));
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -46,11 +71,17 @@ export function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('auth.login.email')}</FormLabel>
               <FormControl>
-                <Input placeholder="your@email.com" {...field} />
+                <Input 
+                  placeholder={t('auth.login.emailPlaceholder')} 
+                  {...field} 
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage>
+                {form.formState.errors.email?.message && 
+                  t(form.formState.errors.email.message as string)}
+              </FormMessage>
             </FormItem>
           )}
         />
@@ -59,16 +90,23 @@ export function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t('auth.login.password')}</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="••••••" {...field} />
+                <Input 
+                  type="password" 
+                  placeholder={t('auth.login.passwordPlaceholder')} 
+                  {...field} 
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage>
+                {form.formState.errors.password?.message && 
+                  t(form.formState.errors.password.message as string)}
+              </FormMessage>
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Login
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? t('auth.login.submitting') : t('auth.login.submit')}
         </Button>
       </form>
     </Form>

@@ -10,6 +10,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LoginForm } from "./LoginForm";
 import { SignupForm } from "./SignupForm";
+import { useTranslation } from "react-i18next";
 
 export function AuthModal({
   open,
@@ -19,6 +20,7 @@ export function AuthModal({
   onOpenChange: (open: boolean) => void;
 }) {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
+  const { t } = useTranslation();
 
   const handleSuccess = () => {
     onOpenChange(false);
@@ -29,7 +31,9 @@ export function AuthModal({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-center">
-            {activeTab === "login" ? "Welcome back" : "Create an account"}
+            {activeTab === "login" 
+              ? t('auth.login.title') 
+              : t('auth.signup.title')}
           </DialogTitle>
         </DialogHeader>
         <Tabs
@@ -38,8 +42,12 @@ export function AuthModal({
           className="w-full"
         >
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login">Login</TabsTrigger>
-            <TabsTrigger value="signup">Sign Up</TabsTrigger>
+            <TabsTrigger value="login">
+              {t('header.login')}
+            </TabsTrigger>
+            <TabsTrigger value="signup">
+              {t('auth.signup.title')}
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="login">
             <LoginForm onSuccess={handleSuccess} />
