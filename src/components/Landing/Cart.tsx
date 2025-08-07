@@ -2,14 +2,37 @@ import { Button } from "../ui/button";
 import { useCart } from '../context/Cartcontext';
 import { Link } from 'react-router-dom';
 import { TrashIcon } from "lucide-react";
+import { submitOrder } from '@/api/serviceOrders';
+import { toast } from "sonner";
 
 export const Cart = () => {
-  const { cartItems, removeFromCart, updateQuantity, cartCount } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, cartCount, clearCart } = useCart();
 
   const total = cartItems.reduce(
     (sum, item) => sum + (parseFloat(item.price.replace(',', '.')) * item.quantity),
     0
   ).toFixed(2).replace('.', ',');
+
+  const handleOrderAll = async () => {
+    if (cartItems.length === 0) {
+      toast.warning("Votre panier est vide");
+      return;
+    }
+
+    const orderItems = cartItems.map(item => ({
+      productname: item.name,
+      id: item.id,
+      price: item.price.replace(' DA', ''), // Remove currency for API
+      quantity: item.quantity,
+    }));
+
+    const success = await submitOrder(orderItems);
+    
+    if (success) {
+      clearCart();
+      toast.success("Commande passée avec succès!");
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 mt-24">
@@ -41,8 +64,8 @@ export const Cart = () => {
                       variant="outline" 
                       size="sm"
                       className="text-black"
-
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      disabled={item.quantity <= 1}
                     >
                       -
                     </Button>
@@ -63,7 +86,7 @@ export const Cart = () => {
                   onClick={() => removeFromCart(item.id)}
                   className="bg-white text-black cursor-pointer hover:text-white hover:bg-[#d6b66d]"
                 >
-                  Supprimer <TrashIcon/>
+                  Supprimer <TrashIcon className="ml-1 h-4 w-4" />
                 </Button>
               </div>
             ))}
@@ -74,7 +97,7 @@ export const Cart = () => {
             <div className="space-y-2 mb-6">
               <div className="flex justify-between">
                 <span>Sous-total</span>
-                <span>{total} €</span>
+                <span>{total} DA</span>
               </div>
               <div className="flex justify-between">
                 <span>Livraison</span>
@@ -82,9 +105,15 @@ export const Cart = () => {
               </div>
               <div className="flex justify-between font-bold text-lg pt-2 border-t">
                 <span>Total</span>
-                <span>{total} €</span>
+                <span>{total} DA</span>
               </div>
             </div>
+            <Button 
+              className="w-full mb-4 bg-[#d6b66d] hover:bg-[#c9a95d] text-black"
+              onClick={handleOrderAll}
+            >
+              Commander tout le panier
+            </Button>
             <Button className="w-full" asChild>
               <Link to="/checkout">Passer la commande</Link>
             </Button>

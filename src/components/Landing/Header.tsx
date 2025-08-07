@@ -1,9 +1,9 @@
-import { Search, ShoppingCart } from "lucide-react";
+import { Search, ShoppingCart, User } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import logo from '@/assets/7-removebg-preview.png';
 import { useCart } from '../context/Cartcontext';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   DropdownMenu,
@@ -12,17 +12,43 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { AuthModal } from "./AuthModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { authService } from "@/api/auth";
 
 export const Header = () => {
   const { cartCount, cartItems } = useCart();
   const location = useLocation();
+  const navigate = useNavigate();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { t, i18n } = useTranslation();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check auth status on component mount
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    setIsLoggedIn(!!token);
+  }, []);
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
     document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
+  };
+
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      setIsLoggedIn(false);
+      navigate('/');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    setIsAuthModalOpen(false);
   };
 
   // SVG flags as React components
@@ -76,7 +102,7 @@ export const Header = () => {
                 className="relative h-10 w-10 rounded-full hover:text-[#d6b66d]"
                 aria-label="Shopping cart"
               >
-                <ShoppingCart className="h-5 w-5 " />
+                <ShoppingCart className="h-5 w-5" />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-transparent text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hover:text-[#d6b66d]">
                     {cartCount}
@@ -90,7 +116,7 @@ export const Header = () => {
             >
               {cartCount === 0 ? (
                 <div className="text-center py-4">
-                  <p className="text-sm">{t('header.cart')}</p>
+                  <p className="text-sm">{t('header.cartEmpty')}</p>
                 </div>
               ) : (
                 <>
@@ -125,7 +151,40 @@ export const Header = () => {
               )}
             </DropdownMenuContent>
           </DropdownMenu>
-          <div>
+
+          {/* User Profile Dropdown */}
+          {isLoggedIn ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="h-10 w-10 rounded-full hover:bg-white/10"
+                  aria-label="User profile"
+                >
+                  <User className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                align="end" 
+                className="w-56 bg-zinc-900 border-zinc-700 text-white"
+              >
+               
+                <DropdownMenuItem 
+                  className="hover:bg-zinc-800 cursor-pointer"
+                  onClick={() => navigate('/orders')}
+                >
+                  {t('header.orders')}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="hover:bg-zinc-800 cursor-pointer text-red-400"
+                  onClick={handleLogout}
+                >
+                  {t('header.logout')}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
             <Button 
               variant="outline" 
               className="text-black cursor-pointer" 
@@ -133,7 +192,8 @@ export const Header = () => {
             >
               {t('header.login')}
             </Button>
-          </div>
+          )}
+
           {/* Language Switcher */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -188,13 +248,15 @@ export const Header = () => {
               className="pl-10 py-6 rounded-full bg-zinc-100 border-0 focus-visible:ring-2 focus-visible:ring-primary/50 text-black"
             />
           </div>
-
-          <AuthModal
-            open={isAuthModalOpen}
-            onOpenChange={setIsAuthModalOpen}
-          />
         </div>
       )}
+
+      {/* Auth Modal */}
+      <AuthModal
+        open={isAuthModalOpen}
+        onOpenChange={setIsAuthModalOpen}
+        onLoginSuccess={handleLoginSuccess}
+      />
     </header>
   );
 };

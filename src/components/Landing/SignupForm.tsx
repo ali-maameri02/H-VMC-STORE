@@ -54,6 +54,11 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
   try {
     await authService.register(values);
     toast.success(t('auth.signup.successMessage'));
+    localStorage.setItem('userData', JSON.stringify({
+      name: values.name,
+      email: values.email,
+      phone: values.phone,}));
+
     if (onSuccess) onSuccess();
   } catch (error) {
     console.error('Registration error:', error);

@@ -28,7 +28,11 @@ const formSchema = z.object({
   }),
 });
 
-export function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
+export function LoginForm({
+  onSuccess,
+}: {
+  onSuccess?: (userData: { name: string }) => void; // <-- Change to accept userData
+}) {
   const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -40,18 +44,15 @@ export function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
       password: "",
     },
   });
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     try {
-      await authService.login(values);
-      
-      // Handle successful login
+      const response = await authService.login(values);
+  
       toast.success(t('auth.login.successMessage'));
-      
-      // Redirect or call success callback
-      if (onSuccess) {
-        onSuccess();
+  
+      if (onSuccess && response?.data) {
+        onSuccess({ name: response.data }); // ✅ Pass name
       } else {
         navigate('/dashboard');
       }
@@ -62,6 +63,7 @@ export function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
       setIsSubmitting(false);
     }
   }
+  
 
   return (
     <Form {...form}>

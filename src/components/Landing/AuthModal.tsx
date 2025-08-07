@@ -15,9 +15,13 @@ import { useTranslation } from "react-i18next";
 export function AuthModal({
   open,
   onOpenChange,
+  onLoginSuccess, // <-- Add this line
+
+  
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onLoginSuccess: (userData: { name: string }) => void; // <-- Add this line
 }) {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
   const { t } = useTranslation();
@@ -50,8 +54,14 @@ export function AuthModal({
             </TabsTrigger>
           </TabsList>
           <TabsContent value="login">
-            <LoginForm onSuccess={handleSuccess} />
-          </TabsContent>
+  <LoginForm 
+    onSuccess={(userData) => {
+      onLoginSuccess(userData);  // <-- Update Header state
+      handleSuccess();           // <-- Close modal
+    }} 
+  />
+</TabsContent>
+
           <TabsContent value="signup">
             <SignupForm onSuccess={handleSuccess} />
           </TabsContent>

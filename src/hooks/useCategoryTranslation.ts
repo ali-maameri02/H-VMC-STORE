@@ -4,6 +4,6 @@ export function useCategoryTranslation() {
   const { t } = useTranslation();
   
   return (categoryName: string) => {
-    return t(`categories.${categoryName}`);
+    return t(`${categoryName}`);
   };
 }

@@ -1,91 +1,50 @@
-import { ProductCard } from "./ProductCard";
+// src/components/ProductGrid.tsx
+import { useEffect, useState } from 'react';
+import { ProductCard } from './ProductCard';
+import { fetchProducts } from '@/api/serviceProducts';
+import { type Product } from '@/api/serviceProducts';
 
-const products = [
-  { 
-    id: "1",
+export const ProductGrid = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    name: "Sèche-cheveux Professionnel", 
-    category: "Appareils de coiffure", 
-    price: "249,99 €",
-    image: "https://img.freepik.com/photos-gratuite/arrangement-outils-salon-coiffure_23-2149167446.jpg?semt=ais_hybrid&w=740" 
-  },
-  { 
-    id: "1",
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await fetchProducts();
+        setProducts(data);
+      } catch (err) {
+        setError('Failed to load products');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    name: "Lisseur Céramique", 
-    category: "Outils de styling", 
-    price: "179,99 €",
-    image: "https://img.freepik.com/photos-gratuite/arrangement-outils-salon-coiffure_23-2149167446.jpg?semt=ais_hybrid&w=740" 
-  },
-  { 
-    id: "1",
+    loadProducts();
+  }, []);
 
-    name: "Kit Ciseaux Professionnels", 
-    category: "Outils de coupe", 
-    price: "349,99 €",
-    image: "https://img.freepik.com/photos-gratuite/arrangement-outils-salon-coiffure_23-2149167446.jpg?semt=ais_hybrid&w=740" 
-  },
-  { 
-    id: "1",
+  if (loading) {
+    return <div className="px-4 py-8 text-center">Loading products...</div>;
+  }
 
-    name: "Chaise de Salon Professionnelle", 
-    category: "Mobilier", 
-    price: "599,99 €",
-    image: "https://img.freepik.com/photos-gratuite/arrangement-outils-salon-coiffure_23-2149167446.jpg?semt=ais_hybrid&w=740" 
-  },
-  { 
-    id: "1",
+  if (error) {
+    return <div className="px-4 py-8 text-center text-red-500">{error}</div>;
+  }
 
-    name: "Table de Mixage Couleur", 
-    category: "Coloration", 
-    price: "129,99 €",
-    image: "https://img.freepik.com/photos-gratuite/arrangement-outils-salon-coiffure_23-2149167446.jpg?semt=ais_hybrid&w=740" 
-  },
-  { 
-    id: "1",
-
-    name: "Lampe UV pour Ongles", 
-    category: "Manucure", 
-    price: "89,99 €",
-    image: "https://img.freepik.com/photos-gratuite/arrangement-outils-salon-coiffure_23-2149167446.jpg?semt=ais_hybrid&w=740" 
-  },
-  { 
-    id: "1",
-
-    name: "Brosse Rotative Électrique", 
-    category: "Styling", 
-    price: "49,99 €",
-    image: "https://img.freepik.com/photos-gratuite/arrangement-outils-salon-coiffure_23-2149167446.jpg?semt=ais_hybrid&w=740" 
-  },
-  { 
-    id: "1",
-
-    name: "Vaporisateur Professionnel", 
-    category: "Accessoires", 
-    price: "39,99 €",
-    image: "https://img.freepik.com/photos-gratuite/arrangement-outils-salon-coiffure_23-2149167446.jpg?semt=ais_hybrid&w=740" 
-  },
-  { 
-    id: "1",
-
-    name: "Machine à Découper", 
-    category: "Outils de coupe", 
-    price: "279,99 €",
-    image: "https://img.freepik.com/photos-gratuite/arrangement-outils-salon-coiffure_23-2149167446.jpg?semt=ais_hybrid&w=740" 
-  },
-  { 
-    id: "1",
-
-    name: "Miroir de Salon LED", 
-    category: "Mobilier", 
-    price: "459,99 €",
-    image: "https://img.freepik.com/photos-gratuite/arrangement-outils-salon-coiffure_23-2149167446.jpg?semt=ais_hybrid&w=740" 
-  },
-];
-
-export const ProductGrid = () => (
+  return (
     <section className="px-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />      ))}
+        <ProductCard key={product.id} product={{
+          id: product.id.toString(),
+          name: product.name,
+          category: product.category.name,
+          price: `${product.price} `,
+          image: product.image,
+          description: product.description
+        }} />
+      ))}
     </section>
   );
+};

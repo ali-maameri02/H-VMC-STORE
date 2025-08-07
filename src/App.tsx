@@ -23,6 +23,7 @@ const TranslationLoader = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+// src/App.tsx
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: '/products',
         element: <ProductsCategorie />,
+      },
+      {
+        path: '/categories/:categoryId',
+        element: <ProductsCategorie />, // Add this new route
       },
       {
         path: '/product/:id',
