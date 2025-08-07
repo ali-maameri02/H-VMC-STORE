@@ -72,5 +72,49 @@
     "Lisseur": "مكواة فرد",
     "Brosse": "فرشاة",
     "Makup artist": "فنان مكياج"
+  },
+  "product": {
+    "addToCart": "أضف إلى السلة",
+    "orderNow": "اطلب الآن",
+    "back": "رجوع",
+    "loading": "جاري تحميل المنتج...",
+    "notFound": "المنتج غير موجود",
+    "notFoundDescription": "المنتج الذي تبحث عنه غير موجود",
+    "description": "الوصف",
+    "quantity": "الكمية",
+    "price": "السعر",
+    "category": "الفئة"
+  },
+  "productGrid": {
+    "loading": "جاري تحميل المنتجات...",
+    "error": "فشل تحميل المنتجات"
+  },
+  "productsCategory": {
+    "title": "منتجات الفئة",
+    "noProducts": "لا توجد منتجات",
+    "noProductsInCategory": "لا توجد منتجات في فئة {category}",
+    "noProductsAvailable": "لا توجد منتجات متاحة",
+    "browseCategories": "تصفح الفئات",
+    "loadingFailed": "فشل التحميل",
+    "backToHome": "العودة إلى الصفحة الرئيسية"
+  },
+  "cart": {
+    "title": "سلة التسوق الخاصة بك",
+    "empty": "سلة التسوق فارغة",
+    "emptyDescription": "تصفح منتجاتنا وأضف عناصر إلى سلة التسوق الخاصة بك",
+    "viewProducts": "عرض المنتجات",
+    "summary": "ملخص",
+    "subtotal": "المجموع الفرعي",
+    "shipping": "الشحن",
+    "free": "مجاني",
+    "total": "المجموع",
+    "orderAll": "اطلب كل السلة",
+    "checkout": "إتمام الطلب",
+    "remove": "حذف",
+    "update": "تحديث"
+  },
+  "errors": {
+    "categoryProducts": "فشل تحميل منتجات الفئة",
+    "productNotFound": "المنتج غير موجود"
   }
 }

@@ -10,7 +10,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    ns: ['translation','categories'], // Make sure this includes all your namespaces
+    ns: ['translation'], // Add all namespaces
     defaultNS: 'translation',
 
     resources: {

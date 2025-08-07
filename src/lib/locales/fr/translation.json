@@ -72,5 +72,49 @@
     "Lisseur": "Lisseur",
     "Brosse": "Brosse",
     "Makup artist": "Makup artist"
+  },
+  "product": {
+    "addToCart": "Ajouter au panier",
+    "orderNow": "Commander maintenant",
+    "back": "Retour",
+    "loading": "Chargement du produit...",
+    "notFound": "Produit non trouvé",
+    "notFoundDescription": "Le produit que vous recherchez n'existe pas",
+    "description": "Description",
+    "quantity": "Quantité",
+    "price": "Prix",
+    "category": "Catégorie"
+  },
+  "productGrid": {
+    "loading": "Chargement des produits...",
+    "error": "Échec du chargement des produits"
+  },
+  "productsCategory": {
+    "title": "Produits de la catégorie",
+    "noProducts": "Aucun produit",
+    "noProductsInCategory": "Aucun produit dans la catégorie {category}",
+    "noProductsAvailable": "Aucun produit disponible",
+    "browseCategories": "Parcourir les catégories",
+    "loadingFailed": "Échec du chargement",
+    "backToHome": "Retour à l'accueil"
+  },
+  "cart": {
+    "title": "Votre Panier",
+    "empty": "Votre panier est vide",
+    "emptyDescription": "Parcourez nos produits et ajoutez des articles à votre panier",
+    "viewProducts": "Voir les produits",
+    "summary": "Récapitulatif",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "free": "Gratuite",
+    "total": "Total",
+    "orderAll": "Commander tout le panier",
+    "checkout": "Passer la commande",
+    "remove": "Supprimer",
+    "update": "Mettre à jour"
+  },
+  "errors": {
+    "categoryProducts": "Échec du chargement des produits de la catégorie",
+    "productNotFound": "Produit non trouvé"
   }
 }

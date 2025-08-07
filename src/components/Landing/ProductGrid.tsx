@@ -34,7 +34,8 @@ export const ProductGrid = () => {
   }
 
   return (
-    <section className="px-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+    <section className="container px-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+      
       {products.map((product) => (
         <ProductCard key={product.id} product={{
           id: product.id.toString(),
@@ -44,6 +45,7 @@ export const ProductGrid = () => {
           image: product.image,
           description: product.description
         }} />
+        
       ))}
     </section>
   );

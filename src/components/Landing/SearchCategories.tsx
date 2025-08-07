@@ -53,7 +53,7 @@ export const SearchCategories = () => {
   }
 
   return (
-    <section className="px-4 py-6 space-y-6 bg-gradient-to-r from-black via-black to-zinc-900 mt-96">
+    <section className="px-4 py-6 space-y-6 bg-gradient-to-r from-black via-black to-zinc-900 mt-52">
       <div className="flex justify-center">
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4 max-w-7xl mx-auto">
           {categories.map((category) => (

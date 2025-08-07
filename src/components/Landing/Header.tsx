@@ -78,7 +78,7 @@ export const Header = () => {
   return (
     <header className="bg-gradient-to-r from-black via-black to-zinc-900 text-white fixed w-full top-0 z-50 shadow-lg">
       {/* Top Navigation Bar */}
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center border-b border-zinc-800">
+      <div className="container mx-auto px-4 py-3 pb-0 flex justify-between items-center border-b border-zinc-800">
         <div className="flex items-center gap-4">
           <Link to="/" className="flex items-center gap-2">
             <img 
@@ -231,7 +231,7 @@ export const Header = () => {
 
       {/* Hero Section - Only on homepage */}
       {location.pathname === '/' && (
-        <div className="container mx-auto px-4 py-12 flex flex-col items-center mt-16">
+        <div className="container mx-auto px-4 py-0 flex flex-col items-center mt-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight text-center">
             {t('home.title')}
           </h1>
