@@ -11,6 +11,7 @@ import { LanguageProvider } from './components/context/LanguageProvider';
 import './lib/rtl.css';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Orders } from './components/Landing/Orders';
 
 const TranslationLoader = ({ children }: { children: React.ReactNode }) => {
   const { i18n } = useTranslation();
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: '/checkout',
         element: <div>Checkout Page</div>,
+      },
+      {
+        path: '/orders',
+        element: <Orders />, // Add this new route
       },
     ],
   },

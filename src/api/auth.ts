@@ -85,7 +85,6 @@ export const authService = {
     // Clear tokens from localStorage
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    return apiClient.post('/accounts/logout/');
   },
 
   // Add token refresh method if needed

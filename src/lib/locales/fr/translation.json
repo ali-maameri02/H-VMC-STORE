@@ -83,7 +83,10 @@
     "description": "Description",
     "quantity": "Quantité",
     "price": "Prix",
-    "category": "Catégorie"
+    "category": "Catégorie",
+    "addedToCart": "Produit ajouté au panier",
+    "orderPlaced": "Commande passée avec succès",
+    "idRequired": "ID produit requis"
   },
   "productGrid": {
     "loading": "Chargement des produits...",
@@ -111,10 +114,32 @@
     "orderAll": "Commander tout le panier",
     "checkout": "Passer la commande",
     "remove": "Supprimer",
-    "update": "Mettre à jour"
+    "update": "Mettre à jour",
+    "emptyWarning": "Le panier est vide, ajoutez d'abord des produits",
+    "orderSuccess": "Commande passée avec succès"
+  },
+  "orderForm": {
+    "title": "Finaliser la commande",
+    "description": "Veuillez fournir vos informations pour finaliser la commande",
+    "name": "Nom complet",
+    "email": "Email",
+    "phone": "Numéro de téléphone",
+    "cancel": "Annuler",
+    "submitOrder": "Passer la commande"
   },
   "errors": {
     "categoryProducts": "Échec du chargement des produits de la catégorie",
-    "productNotFound": "Produit non trouvé"
+    "productNotFound": "Produit non trouvé",
+    "orderFailed": "Échec de la commande",
+    "missingFields": "Veuillez remplir tous les champs obligatoires"
+  },
+  "orders": {
+    "title": "Vos commandes",
+    "empty": "Aucune commande",
+    "emptyDescription": "Vous n'avez passé aucune commande",
+    "browseProducts": "Parcourir les produits",
+    "total": "Total",
+    "quantity": "Quantité",
+    "each": "chaque"
   }
 }

@@ -4,7 +4,7 @@ import { ShoppingCart, ArrowLeft } from "lucide-react";
 import { useCart } from '../context/Cartcontext';
 import { useState, useEffect, useRef } from 'react';
 import { fetchProductById, type Product } from '@/api/serviceProducts';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { submitOrder } from '@/api/serviceOrders';
 import { useTranslation } from "react-i18next";
@@ -20,22 +20,34 @@ export const ProductDetails = () => {
   const [zoomStyle, setZoomStyle] = useState({});
   const [showZoom, setShowZoom] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [showOrderForm, setShowOrderForm] = useState(false);
+  const [userData, setUserData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+  });
   const imgRef = useRef<HTMLImageElement>(null);
   const zoomRef = useRef<HTMLDivElement>(null);
-  const { t } = useTranslation(); // Remove the namespace here since we're using the default namespace
+  const { t } = useTranslation();
 
   useEffect(() => {
+    // Check if user data exists in localStorage
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+    }
+
     const loadProduct = async () => {
       try {
         if (!id) {
-          setError(t('product.idRequired')); // Update to use your translation key
+          setError(t('product.idRequired'));
           return;
         }
         
         const data = await fetchProductById(Number(id));
         setProduct(data);
       } catch (err) {
-        setError(t('product.notFound')); // Update to use your translation key
+        setError(t('product.notFound'));
       } finally {
         setLoading(false);
       }
@@ -68,10 +80,23 @@ export const ProductDetails = () => {
       image: product.image,
       quantity: quantity
     });
-    toast.success(t('product.addedToCart')); // Add this translation to your JSON files
+    toast.success(t('product.addedToCart'));
   };
 
   const handleOrderNow = async () => {
+    if (!product) return;
+    
+    // Check if user data exists
+    const storedUserData = localStorage.getItem("userData");
+    if (!storedUserData || !JSON.parse(storedUserData).name) {
+      setShowOrderForm(true);
+      return;
+    }
+    
+    await proceedWithOrder();
+  };
+
+  const proceedWithOrder = async () => {
     if (!product) return;
     
     try {
@@ -81,10 +106,25 @@ export const ProductDetails = () => {
         price: product.price,
         quantity: quantity || 1,
       });
-      toast.success(t('product.orderPlaced')); // Add this translation to your JSON files
+      toast.success(t('product.orderPlaced'));
     } catch (error) {
-      toast.error(t('errors.orderFailed')); // Add this translation to your JSON files
+      toast.error(t('errors.orderFailed'));
     }
+  };
+
+  const handleUserDataSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Basic validation
+    if (!userData.name || !userData.phone) {
+      toast.error(t('errors.missingFields'));
+      return;
+    }
+    
+    // Save user data to localStorage
+    localStorage.setItem("userData", JSON.stringify(userData));
+    setShowOrderForm(false);
+    proceedWithOrder();
   };
 
   if (loading) {
@@ -210,6 +250,77 @@ export const ProductDetails = () => {
           </div>
         </div>
       </div>
+
+      {/* Order Form Modal */}
+      {showOrderForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h2 className="text-xl font-bold mb-4">{t('orderForm.title')}</h2>
+            <p className="mb-4 text-gray-600">{t('orderForm.description')}</p>
+            
+            <form onSubmit={handleUserDataSubmit}>
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                    {t('orderForm.name')} *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={userData.name}
+                    onChange={(e) => setUserData({...userData, name: e.target.value})}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    {t('orderForm.email')}
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={userData.email}
+                    onChange={(e) => setUserData({...userData, email: e.target.value})}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                    {t('orderForm.phone')} *
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    value={userData.phone}
+                    onChange={(e) => setUserData({...userData, phone: e.target.value})}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    required
+                  />
+                </div>
+              </div>
+              
+              <div className="mt-6 flex justify-end gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowOrderForm(false)}
+                >
+                  {t('orderForm.cancel')}
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-[#d6b66d] hover:bg-[#c9a95d] text-black"
+                >
+                  {t('orderForm.submitOrder')}
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

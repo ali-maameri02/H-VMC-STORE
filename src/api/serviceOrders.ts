@@ -1,11 +1,12 @@
-// src/api/serviceOrders.ts
 import { toast } from "sonner";
 
-interface OrderItem {
+export interface OrderItem {
   productname: string;
   id: string;
   price: string | number;
   quantity: number;
+  date?: string;
+  image?: string;
 }
 
 export const submitOrder = async (items: OrderItem | OrderItem[]) => {
@@ -18,26 +19,44 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
   };
 
   try {
-    // Handle single product or multiple products
     const orders = Array.isArray(items) ? items : [items];
+    const timestamp = new Date().toISOString();
     
-    // Process each order
+    // Prepare orders for localStorage
+    const ordersWithDate = orders.map(item => ({
+      ...basePayload,
+      ...item,
+      date: timestamp,
+      image: item.image || '/placeholder-product.jpg'
+    }));
+    
+    // Save to localStorage
+    const existingOrders = JSON.parse(localStorage.getItem("userOrders") || "[]");
+    localStorage.setItem("userOrders", JSON.stringify([...existingOrders, ...ordersWithDate]));
+    
+    // Submit to Google Sheets
     for (const item of orders) {
       const fullPayload = {
         ...basePayload,
-        ...item
+        productname: item.productname,
+        id: item.id,
+        price: item.price,
+        quantity: item.quantity
       };
 
       const response = await fetch("https://script.google.com/macros/s/AKfycbzD7upin5Kbl8z8axksNvfZeIKnAVFLdkuNiegJ4qLOf5H-DDDaNUgzNGW4xpsh3fjJ8g/exec", {
         method: "POST",
-        body: JSON.stringify(fullPayload),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
+        body: JSON.stringify(fullPayload),
       });
-
-      const result = await response.text();
-      console.log("Commande envoyée :", result);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      console.log("Commande envoyée :", await response.text());
     }
 
     toast.success("Commande(s) bien enregistrée(s) !");
@@ -46,5 +65,27 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
     console.error("Erreur lors de la commande :", error);
     toast.error("Échec de l'envoi de la commande.");
     return false;
+  }
+};
+
+export const getLocalOrders = (): OrderItem[] => {
+  try {
+    const userData = JSON.parse(localStorage.getItem("userData") || "{}");
+    const userEmail = userData.email;
+    
+    if (!userEmail) return [];
+    
+    const allOrders = JSON.parse(localStorage.getItem("userOrders") || "[]");
+    return allOrders
+      .filter((order: any) => order.email === userEmail)
+      .map((order: any) => ({
+        ...order,
+        price: typeof order.price === 'string' ? 
+          parseFloat(order.price.trim()) : 
+          order.price
+      }));
+  } catch (error) {
+    console.error("Error reading orders from localStorage:", error);
+    return [];
   }
 };
