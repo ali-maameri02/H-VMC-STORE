@@ -1,0 +1,162 @@
+{
+  "header": {
+    "title": "مورد معدات صالونات التجميل المحترفة",
+    "cartEmpty": "سلة التسوق فارغة",
+    "cartTitle": "سلة التسوق الخاصة بك",
+    "viewCart": "عرض السلة",
+    "login": "تسجيل الدخول",
+    "profile": "الملف الشخصي",
+    "orders": "الطلبات",
+    "logout": "تسجيل الخروج"
+  },
+  "home": {
+    "title": "H-VMC",
+    "subtitle": "جودة - ثقة - ابتكار - أناقة احترافية",
+    "searchPlaceholder": "ابحث عن المعدات المهنية..."
+  },
+  "auth": {
+    "login": {
+      "title": "تسجيل الدخول",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "بريدك@الإلكتروني.com",
+      "password": "كلمة المرور",
+      "passwordPlaceholder": "••••••",
+      "submit": "تسجيل الدخول",
+      "errors": {
+        "email": "الرجاء إدخال عنوان بريد إلكتروني صحيح",
+        "password": "يجب أن تحتوي كلمة المرور على الأقل على 6 أحرف"
+      }
+    },
+    "signup": {
+      "title": "إنشاء حساب",
+      "name": "الاسم",
+      "namePlaceholder": "اسمك",
+      "phone": "رقم الهاتف",
+      "phonePlaceholder": "+1 234 567 890",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "بريدك@الإلكتروني.com",
+      "password": "كلمة المرور",
+      "passwordPlaceholder": "••••••",
+      "submit": "إنشاء حساب",
+      "errors": {
+        "name": "يجب أن يحتوي الاسم على الأقل على حرفين",
+        "phone": "الرجاء إدخال رقم هاتف صحيح",
+        "email": "الرجاء إدخال عنوان بريد إلكتروني صحيح",
+        "password": "يجب أن تحتوي كلمة المرور على الأقل على 6 أحرف"
+      }
+    }
+  },
+  "categories": {
+    "Miroirs Led": "مرايا إضاءة LED",
+    "Caisse étagère": "خزانة أرفف",
+    "Chaise": "كرسي",
+    "Lave-tête": "حوض غسيل الشعر",
+    "Caisse comptoir": "خزينة حساب",
+    "Salon client": "صالة الانتظار",
+    "Chariot": "عربة",
+    "Support séchoir": "حامل مجفف شعر",
+    "Support tondeuse": "حامل ماكينة حلاقة",
+    "Tondeuse": "ماكينة حلاقة",
+    "Relax": "استرخاء",
+    "Tabouret": "مقعد",
+    "Valise": "حقيبة",
+    "Stérilisateur": "معقم",
+    "Accessoires chaise": "إكسسوارات الكرسي",
+    "Accessoires Lave-tête": "إكسسوارات حوض الغسيل",
+    "Vaposone": "فابوسون",
+    "led barber": "إضاءة حلاق LED",
+    "Hair vaccum": "مكنسة شفط الشعر",
+    "Ciseaux": "مقصات",
+    "Post de travail": "محطة عمل",
+    "Séchoir": "مجفف شعر",
+    "Lisseur": "مكواة فرد",
+    "Brosse": "فرشاة",
+    "Makup artist": "فنان مكياج"
+  },
+  "product": {
+    "addToCart": "أضف إلى السلة",
+    "orderNow": "اطلب الآن",
+    "back": "رجوع",
+    "loading": "جاري تحميل المنتج...",
+    "notFound": "المنتج غير موجود",
+    "notFoundDescription": "المنتج الذي تبحث عنه غير موجود",
+    "description": "الوصف",
+    "quantity": "الكمية",
+    "price": "السعر",
+    "category": "الفئة",
+    "addedToCart": "تمت إضافة المنتج إلى السلة",
+    "orderPlaced": "تم تقديم الطلب بنجاح",
+    "idRequired": "معرف المنتج مطلوب"
+  },
+  "productGrid": {
+    "loading": "جاري تحميل المنتجات...",
+    "error": "فشل تحميل المنتجات"
+  },
+  "productsCategory": {
+    "title": "منتجات الفئة",
+    "noProducts": "لا توجد منتجات",
+    "noProductsInCategory": "لا توجد منتجات في فئة {category}",
+    "noProductsAvailable": "لا توجد منتجات متاحة",
+    "browseCategories": "تصفح الفئات",
+    "loadingFailed": "فشل التحميل",
+    "backToHome": "العودة إلى الصفحة الرئيسية"
+  },
+  "cart": {
+    "title": "سلة التسوق الخاصة بك",
+    "empty": "سلة التسوق فارغة",
+    "emptyDescription": "تصفح منتجاتنا وأضف عناصر إلى سلة التسوق الخاصة بك",
+    "viewProducts": "عرض المنتجات",
+    "summary": "ملخص",
+    "subtotal": "المجموع الفرعي",
+    "shipping": "الشحن",
+    "free": "مجاني",
+    "total": "المجموع",
+    "orderAll": "اطلب كل السلة",
+    "checkout": "إتمام الطلب",
+    "remove": "حذف",
+    "update": "تحديث",
+    "emptyWarning": "السلة فارغة، أضف منتجات أولاً",
+    "orderSuccess": "تم تقديم الطلب بنجاح"
+  },
+
+  "orderForm": {
+    "title": "إتمام الطلب",
+    "description": "الرجاء تقديم معلوماتك لإتمام الطلب",
+    "name": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "cancel": "إلغاء",
+    "submitOrder": "تقديم الطلب"
+  },
+  "errors": {
+    "categoryProducts": "فشل تحميل منتجات الفئة",
+    "productNotFound": "المنتج غير موجود",
+    "orderFailed": "فشل تقديم الطلب",
+    "missingFields": "الرجاء ملء جميع الحقول المطلوبة"
+  },
+  "orders": {
+    "title": "طلباتك",
+    "empty": "لا توجد طلبات",
+    "emptyDescription": "لم تقم بأي طلبات بعد",
+    "browseProducts": "تصفح المنتجات",
+    "total": "المجموع",
+    "quantity": "الكمية",
+    "each": "لكل قطعة"
+  },
+  "footer": {
+    "description": "منتجات العناية بالشعر الممتازة للمحترفين والهواة على حد سواء.",
+    "quickLinks": "روابط سريعة",
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "cart": "عربة التسوق",
+    "orders": "طلباتي",
+    "contact": "اتصل بنا",
+    "newsletter": "النشرة الإخبارية",
+    "newsletterText": "اشترك للحصول على تحديثات حول المنتجات الجديدة والعروض الخاصة.",
+    "emailPlaceholder": "عنوان بريدك الإلكتروني",
+    "subscribe": "اشتراك",
+    "copyright": "H-VMC Beauty. جميع الحقوق محفوظة.",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة"
+  }
+}
