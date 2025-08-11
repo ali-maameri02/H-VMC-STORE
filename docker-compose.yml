@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    build: ./hvmc-store
+    build: ./frontend 
     image: hvmc-frontend
     container_name: hvmc_frontend
     ports:
