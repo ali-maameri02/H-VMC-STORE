@@ -24,14 +24,18 @@ services:
     restart: unless-stopped
 
   db:
-    image: postgres:16
-    container_name: hvmc_db
-    volumes:
-      - pg_data:/var/lib/postgresql/data/
-    env_file: .env.prod
-    networks:
-      - hvmc-network
-    restart: unless-stopped
+   image: postgres:16
+   container_name: hvmc_db
+   volumes:
+    - pg_data:/var/lib/postgresql/data/
+   env_file: .env.prod
+   environment:
+    POSTGRES_DB: hvmc_prod
+    POSTGRES_USER: hvmc_user
+    POSTGRES_PASSWORD: strong-password
+   networks:
+    - hvmc-network
+   restart: unless-stopped
 
   nginx:
     image: nginx:alpine
