@@ -1,0 +1,14 @@
+[dir="rtl"] * {
+    direction: rtl;
+  }
+  
+  /* Add any RTL-specific styles here */
+  [dir="rtl"] .text-right {
+    text-align: left !important;
+  }
+  
+  [dir="rtl"] .text-left {
+    text-align: right !important;
+  }
+  
+  /* Add more RTL overrides as needed */
