@@ -1,0 +1,16 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block after_field_sets %}
+{{ block.super }}
+{% if original and original.image %}
+<div class="form-row field-image_preview">
+    <div>
+        <label>{% trans "Current Image" %}:</label>
+        <div>
+            <img src="{{ original.image.url }}" style="max-height: 200px;" />
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
