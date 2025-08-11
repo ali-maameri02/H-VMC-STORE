@@ -1,0 +1,10 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form method="post" style="max-width: 400px;">{% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Export" class="default">
+  <a href=".." class="button">Cancel</a>
+</form>
+{% endblock %}

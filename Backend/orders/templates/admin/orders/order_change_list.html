@@ -1,0 +1,12 @@
+{% extends "admin/change_list.html" %}
+
+{% load i18n %}  {# Load translation tags #}
+
+{% block object-tools-items %}
+  {{ block.super }}
+  <li>
+    <a href="{% url 'admin:export_to_sheet' %}" class="addlink">
+      {% trans "Export Orders to Google Sheet" %}
+    </a>
+  </li>
+{% endblock %}
