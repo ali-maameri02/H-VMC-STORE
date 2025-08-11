@@ -128,14 +128,10 @@ USE_TZ = True
 CORS_ALLOW_ALL_ORIGINS = False  # Change this to False
 CORS_ALLOW_CREDENTIALS = True  # Add this line
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Your React frontend origin
-    # Add other origins if needed
-]
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",  # Also add to CSRF trusted origins
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     "http://localhost:5173",  # Also add to CSRF trusted origins
+# ]
 
 # === Auto Field ===
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
