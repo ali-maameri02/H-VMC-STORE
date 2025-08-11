@@ -1,0 +1,161 @@
+{
+  "header": {
+    "title": "Fournisseur de matériel professionnel pour salons de coiffure",
+    "cartEmpty": "Votre panier est vide",
+    "cartTitle": "Votre Panier",
+    "viewCart": "Voir le panier",
+    "login": "Connexion",
+    "profile": "Profil",
+    "orders": "Commandes",
+    "logout": "Déconnexion"
+  },
+  "home": {
+    "title": "H-VMC",
+    "subtitle": "Qualité – Confiance – Innovation – Élégance professionnelle",
+    "searchPlaceholder": "Rechercher des équipements professionnels..."
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "email": "Email",
+      "emailPlaceholder": "votre@email.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "••••••",
+      "submit": "Se connecter",
+      "errors": {
+        "email": "Veuillez entrer une adresse email valide",
+        "password": "Le mot de passe doit contenir au moins 6 caractères"
+      }
+    },
+    "signup": {
+      "title": "Créer un compte",
+      "name": "Nom",
+      "namePlaceholder": "Votre nom",
+      "phone": "Numéro de téléphone",
+      "phonePlaceholder": "+1 234 567 890",
+      "email": "Email",
+      "emailPlaceholder": "votre@email.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "••••••",
+      "submit": "Créer un compte",
+      "errors": {
+        "name": "Le nom doit contenir au moins 2 caractères",
+        "phone": "Veuillez entrer un numéro de téléphone valide",
+        "email": "Veuillez entrer une adresse email valide",
+        "password": "Le mot de passe doit contenir au moins 6 caractères"
+      }
+    }
+  },
+  "categories": {
+    "Miroirs Led": "Miroirs Led",
+    "Caisse étagère": "Caisse étagère",
+    "Chaise": "Chaise",
+    "Lave-tête": "Lave-tête",
+    "Caisse comptoir": "Caisse comptoir",
+    "Salon client": "Salon client",
+    "Chariot": "Chariot",
+    "Support séchoir": "Support séchoir",
+    "Support tondeuse": "Support tondeuse",
+    "Tondeuse": "Tondeuse",
+    "Relax": "Relax",
+    "Tabouret": "Tabouret",
+    "Valise": "Valise",
+    "Stérilisateur": "Stérilisateur",
+    "Accessoires chaise": "Accessoires chaise",
+    "Accessoires Lave-tête": "Accessoires Lave-tête",
+    "Vaposone": "Vaposone",
+    "led barber": "led barber",
+    "Hair vaccum": "Hair vaccum",
+    "Ciseaux": "Ciseaux",
+    "Post de travail": "Post de travail",
+    "Séchoir": "Séchoir",
+    "Lisseur": "Lisseur",
+    "Brosse": "Brosse",
+    "Makup artist": "Makup artist"
+  },
+  "product": {
+    "addToCart": "Ajouter au panier",
+    "orderNow": "Commander maintenant",
+    "back": "Retour",
+    "loading": "Chargement du produit...",
+    "notFound": "Produit non trouvé",
+    "notFoundDescription": "Le produit que vous recherchez n'existe pas",
+    "description": "Description",
+    "quantity": "Quantité",
+    "price": "Prix",
+    "category": "Catégorie",
+    "addedToCart": "Produit ajouté au panier",
+    "orderPlaced": "Commande passée avec succès",
+    "idRequired": "ID produit requis"
+  },
+  "productGrid": {
+    "loading": "Chargement des produits...",
+    "error": "Échec du chargement des produits"
+  },
+  "productsCategory": {
+    "title": "Produits de la catégorie",
+    "noProducts": "Aucun produit",
+    "noProductsInCategory": "Aucun produit dans la catégorie {category}",
+    "noProductsAvailable": "Aucun produit disponible",
+    "browseCategories": "Parcourir les catégories",
+    "loadingFailed": "Échec du chargement",
+    "backToHome": "Retour à l'accueil"
+  },
+  "cart": {
+    "title": "Votre Panier",
+    "empty": "Votre panier est vide",
+    "emptyDescription": "Parcourez nos produits et ajoutez des articles à votre panier",
+    "viewProducts": "Voir les produits",
+    "summary": "Récapitulatif",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "free": "Gratuite",
+    "total": "Total",
+    "orderAll": "Commander tout le panier",
+    "checkout": "Passer la commande",
+    "remove": "Supprimer",
+    "update": "Mettre à jour",
+    "emptyWarning": "Le panier est vide, ajoutez d'abord des produits",
+    "orderSuccess": "Commande passée avec succès"
+  },
+  "orderForm": {
+    "title": "Finaliser la commande",
+    "description": "Veuillez fournir vos informations pour finaliser la commande",
+    "name": "Nom complet",
+    "email": "Email",
+    "phone": "Numéro de téléphone",
+    "cancel": "Annuler",
+    "submitOrder": "Passer la commande"
+  },
+  "errors": {
+    "categoryProducts": "Échec du chargement des produits de la catégorie",
+    "productNotFound": "Produit non trouvé",
+    "orderFailed": "Échec de la commande",
+    "missingFields": "Veuillez remplir tous les champs obligatoires"
+  },
+  "orders": {
+    "title": "Vos commandes",
+    "empty": "Aucune commande",
+    "emptyDescription": "Vous n'avez passé aucune commande",
+    "browseProducts": "Parcourir les produits",
+    "total": "Total",
+    "quantity": "Quantité",
+    "each": "chaque"
+  },
+  "footer": {
+    "description": "Produits capillaires premium pour les professionnels et les passionnés.",
+    "quickLinks": "Liens rapides",
+    "home": "Accueil",
+    "products": "Produits",
+    "cart": "Panier",
+    "orders": "Mes commandes",
+    "contact": "Contactez-nous",
+    "newsletter": "Newsletter",
+    "newsletterText": "Abonnez-vous pour recevoir des mises à jour sur les nouveaux produits et offres spéciales.",
+    "emailPlaceholder": "Votre adresse email",
+    "subscribe": "S'abonner",
+    "copyright": "H-VMC Beauty. Tous droits réservés.",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation"
+  }
+}
