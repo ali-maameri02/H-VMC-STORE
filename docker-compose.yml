@@ -43,7 +43,8 @@ services:
      - ./nginx/conf.d/ecommerce.conf:/etc/nginx/conf.d/ecommerce.conf:ro
      - static_volume:/app/static
      - media_volume:/app/media
-     - ./ssl:/etc/nginx/ssl:ro
+     - /etc/letsencrypt:/etc/nginx/ssl:ro
+
     depends_on:
      - backend
      - frontend
