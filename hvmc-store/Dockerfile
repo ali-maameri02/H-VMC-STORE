@@ -1,3 +1,4 @@
+# Build stage only
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
@@ -7,8 +8,4 @@ ARG VITE_API_URL
 ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
 
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
-# Don't copy nginx config here - we'll mount it separately
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# No production stage - we'll use the main Nginx service
