@@ -16,12 +16,13 @@ RUN npm run build
 # ---------- Production Stage ----------
 FROM nginx:alpine AS production
 
-# Copy built frontend files
+# Copy built frontend files to nginx default html directory
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy your custom nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Optional: Copy your nginx config if you want custom config baked in
+# COPY nginx.conf /etc/nginx/nginx.conf
 
+# Expose ports
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
