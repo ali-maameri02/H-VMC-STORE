@@ -1,16 +1,16 @@
-# Use Debian-based Node to avoid Alpine musl optional deps issue
 FROM node:20
 
 WORKDIR /app
 
-# Copy package.json and package-lock.json first for better caching
 COPY package*.json ./
 
-# Clean install without using existing node_modules
+# Clean install
 RUN npm ci
 
-# Copy the rest of the app
+# Explicitly install the correct rollup binary for Debian/amd64
+RUN npm install @rollup/rollup-linux-x64-gnu --no-save
+
 COPY . .
 
-# Build the frontend
+# Build
 RUN npm run build
