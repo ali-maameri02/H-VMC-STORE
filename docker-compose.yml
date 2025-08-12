@@ -1,18 +1,33 @@
-version: '3.9'
-
 services:
-  backend:
-    build: ./Backend
-    image: hvmc-backend
-    container_name: hvmc_backend
-    env_file: .env.prod
+  frontend:
+    build:
+      context: ./hvmc-store
+      dockerfile: Dockerfile
+    image: hvmc-frontend
+    container_name: hvmc_frontend
+    networks:
+      - hvmc-network
+    # No volumes here!
+    # No command override (let Dockerfile CMD run nginx)
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: hvmc_nginx
+    ports:
+      - "80:80"
+      - "443:443"
     volumes:
+      - ./nginx/conf.d/ecommerce.conf:/etc/nginx/conf.d/ecommerce.conf:ro
       - static_volume:/app/static
       - media_volume:/app/media
+      - /etc/letsencrypt:/etc/nginx/ssl:ro
+    depends_on:
+      - backend
+      - frontend
     networks:
       - hvmc-network
     restart: unless-stopped
-
   db:
     image: postgres:16
     container_name: hvmc_db
@@ -26,41 +41,3 @@ services:
     networks:
       - hvmc-network
     restart: unless-stopped
-
-  frontend:
-   build:
-    context: ./hvmc-store
-    dockerfile: Dockerfile
-   container_name: hvmc_frontend
-   ports:
-    - "5173:80"       # Optional, for local frontend testing (nginx serves on 80)
-   networks:
-    - hvmc-network
-   restart: unless-stopped
-  nginx:
-    image: nginx:alpine
-    container_name: hvmc_nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/conf.d/ecommerce.conf:/etc/nginx/conf.d/ecommerce.conf:ro
-      - static_volume:/app/static
-      - media_volume:/app/media
-      - /etc/letsencrypt:/etc/nginx/ssl:ro
-      # - ./hvmc-store/dist:/usr/share/nginx/html 
-    depends_on:
-      - backend
-      - frontend
-    networks:
-      - hvmc-network
-    restart: unless-stopped
-
-volumes:
-  pg_data:
-  static_volume:
-  media_volume:
-
-networks:
-  hvmc-network:
-    driver: bridge
