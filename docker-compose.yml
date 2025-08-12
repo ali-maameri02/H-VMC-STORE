@@ -32,7 +32,7 @@ services:
       context: ./hvmc-store
       dockerfile: Dockerfile
     container_name: hvmc_frontend
-    command: npm run build
+    # command: npm run build
     volumes:
       - ./hvmc-store/dist:/app/dist   # bind mount host dist folder to container
     networks:
