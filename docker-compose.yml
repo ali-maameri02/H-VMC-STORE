@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   backend:
-    build: /root/H-VMC-STORE/Backend
+    build: ./Backend
     image: hvmc-backend
     container_name: hvmc_backend
     env_file: .env.prod
@@ -14,56 +14,56 @@ services:
     restart: unless-stopped
 
   frontend:
-   build: /root/H-VMC-STORE/hvmc-store
-   image: hvmc-frontend
-   container_name: hvmc_frontend
-   networks:
-    - hvmc-network
-   volumes:
-    - ./hvmc-store/dist:/usr/share/nginx/html  # share built files with nginx
-   restart: unless-stopped
-
+    build:
+      context: ./hvmc-store
+      dockerfile: Dockerfile
+    image: hvmc-frontend
+    container_name: hvmc_frontend
+    networks:
+      - hvmc-network
+    volumes:
+      - frontend_dist:/usr/share/nginx/html
+    command: sh -c "npm install && npm run build"
+    restart: unless-stopped
 
   db:
-   image: postgres:16
-   container_name: hvmc_db
-   volumes:
-    - pg_data:/var/lib/postgresql/data/
-   env_file: .env.prod
-   environment:
-    POSTGRES_DB: hvmc_prod
-    POSTGRES_USER: hvmc_user
-    POSTGRES_PASSWORD: strong-password
-   networks:
-    - hvmc-network
-   restart: unless-stopped
+    image: postgres:16
+    container_name: hvmc_db
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+    env_file: .env.prod
+    environment:
+      POSTGRES_DB: hvmc_prod
+      POSTGRES_USER: hvmc_user
+      POSTGRES_PASSWORD: strong-password
+    networks:
+      - hvmc-network
+    restart: unless-stopped
 
   nginx:
     image: nginx:alpine
     container_name: hvmc_nginx
     ports:
-     - "80:80"
-     - "443:443"
+      - "80:80"
+      - "443:443"
     volumes:
-     - ./nginx/conf.d/ecommerce.conf:/etc/nginx/conf.d/ecommerce.conf:ro
-     - static_volume:/app/static
-     - media_volume:/app/media
-     - /etc/letsencrypt:/etc/nginx/ssl:ro
-     - ./hvmc-store/dist:/usr/share/nginx/html
-
-
+      - ./nginx/conf.d/ecommerce.conf:/etc/nginx/conf.d/ecommerce.conf:ro
+      - static_volume:/app/static
+      - media_volume:/app/media
+      - /etc/letsencrypt:/etc/nginx/ssl:ro
+      - frontend_dist:/usr/share/nginx/html
     depends_on:
-     - backend
-     - frontend
+      - backend
+      - frontend
     networks:
-     - hvmc-network
+      - hvmc-network
     restart: unless-stopped
-
 
 volumes:
   pg_data:
   static_volume:
   media_volume:
+  frontend_dist:
 
 networks:
   hvmc-network:
