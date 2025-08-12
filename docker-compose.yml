@@ -48,6 +48,8 @@ services:
      - static_volume:/app/static
      - media_volume:/app/media
      - /etc/letsencrypt:/etc/nginx/ssl:ro
+     - ./hvmc-store/dist:/usr/share/nginx/html
+
 
     depends_on:
      - backend
