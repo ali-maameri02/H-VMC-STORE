@@ -74,7 +74,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /root/H-VMC-STORE/hvmc-store/dist  # Absolute path
+      device: $PWD/hvmc-store/dist
       o: bind
 
 networks:
