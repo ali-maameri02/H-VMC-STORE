@@ -14,7 +14,7 @@ export const Footer = () => {
           <div className="sm:col-span-2 lg:col-span-1 space-y-4">
             <Link to="/" className="flex items-center gap-2">
               <img 
-  src="/assets/7-removebg-preview-214.png" 
+  src="/images/logo.png" 
   className="h-12 w-12 object-contain" 
                 alt="H-VMC Logo" 
               />

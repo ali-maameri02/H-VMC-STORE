@@ -88,7 +88,7 @@ export const Header = () => {
         <div className="flex items-center gap-4">
           <Link to="/" className="flex items-center gap-2">
             <img 
-  src="/assets/7-removebg-preview-214.png" 
+  src="/images/logo.png" 
   className="h-16 w-16 object-contain" 
               alt="H-VMC Logo" 
             />
