@@ -1,18 +1,16 @@
-FROM node:20-alpine
+# Use Debian-based Node to avoid Alpine musl optional deps issue
+FROM node:20
 
 WORKDIR /app
 
-# Install build tools for native deps
-RUN apk add --no-cache python3 make g++ bash
-
-# Copy only package files first to leverage Docker cache
+# Copy package.json and package-lock.json first for better caching
 COPY package*.json ./
 
-# Force clean install to match Alpine's musl env
-RUN npm install --no-optional && npm rebuild && npm cache clean --force
+# Clean install without using existing node_modules
+RUN npm ci
 
-# Now copy the rest of the app
+# Copy the rest of the app
 COPY . .
 
-# Build
+# Build the frontend
 RUN npm run build
