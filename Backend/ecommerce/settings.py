@@ -342,4 +342,7 @@ JAZZMIN_UI_TWEAKS = {
     "actions_sticky_top": False
 }
 
-# ... (rest of your existing settings remain the same)
+# Make sure these are set correctly
+FORCE_SCRIPT_NAME = ''
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
