@@ -140,8 +140,9 @@ LANGUAGES = [
 LANGUAGE_COOKIE_NAME = 'django_language'
 LANGUAGE_COOKIE_HTTPONLY = True
 LANGUAGE_COOKIE_SAMESITE = 'Lax'
-
-I18N_URL_PREFIXES = ['admin']  # Only add language prefix to admin URLs
+LANGUAGE_COOKIE_PATH = '/'
+LANGUAGE_COOKIE_DOMAIN = None
+# I18N_URL_PREFIXES = ['admin']  # Only add language prefix to admin URLs
 
 # API settings
 API_DEFAULT_VERSION = 'v1'
