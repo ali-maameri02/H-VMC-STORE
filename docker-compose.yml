@@ -28,16 +28,15 @@ services:
     restart: unless-stopped
 
   frontend:
-    build:
-      context: ./hvmc-store
-      dockerfile: Dockerfile
-    container_name: hvmc_frontend
-    command: npm run build
-    volumes:
-      - ./hvmc-store/dist:/app/dist   # bind mount host dist folder to container
-    networks:
-      - hvmc-network
-    restart: "no"
+   build:
+    context: ./hvmc-store
+    dockerfile: Dockerfile
+   container_name: hvmc_frontend
+   ports:
+    - "3000:80"       # Optional, for local frontend testing (nginx serves on 80)
+   networks:
+    - hvmc-network
+   restart: unless-stopped
   nginx:
     image: nginx:alpine
     container_name: hvmc_nginx
