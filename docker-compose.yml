@@ -55,7 +55,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx/conf.d/ecommerce.conf:/etc/nginx/conf.d/default.conf:ro
-      - frontend_dist:/usr/share/nginx/html:ro  # This mounts the built assets
+      - ./hvmc-store/dist:/usr/share/nginx/html:ro  # Direct bind mount
       - static_volume:/app/static
       - media_volume:/app/media
       - /etc/letsencrypt:/etc/nginx/ssl:ro
@@ -70,12 +70,12 @@ volumes:
   pg_data:
   static_volume:
   media_volume:
-  frontend_dist:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./hvmc-store/dist  # Relative to compose file
-      o: bind
+  # frontend_dist:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: ./hvmc-store/dist  # Relative to compose file
+  #     o: bind
 
 networks:
   hvmc-network:
