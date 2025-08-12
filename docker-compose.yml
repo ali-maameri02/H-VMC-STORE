@@ -33,7 +33,7 @@ services:
     dockerfile: Dockerfile
    container_name: hvmc_frontend
    ports:
-    - "3000:80"       # Optional, for local frontend testing (nginx serves on 80)
+    - "5173:80"       # Optional, for local frontend testing (nginx serves on 80)
    networks:
     - hvmc-network
    restart: unless-stopped
