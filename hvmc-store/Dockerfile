@@ -2,15 +2,16 @@ FROM node:20
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y build-essential python3
+
 COPY package*.json ./
 
-# Clean install
 RUN npm ci
 
-# Explicitly install the correct rollup binary for Debian/amd64
+RUN npm rebuild lightningcss
+
 RUN npm install @rollup/rollup-linux-x64-gnu --no-save
 
 COPY . .
 
-# Build
 RUN npm run build
