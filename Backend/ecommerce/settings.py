@@ -142,7 +142,7 @@ LANGUAGE_COOKIE_HTTPONLY = True
 LANGUAGE_COOKIE_SAMESITE = 'Lax'
 LANGUAGE_COOKIE_PATH = '/'
 LANGUAGE_COOKIE_DOMAIN = None
-# I18N_URL_PREFIXES = ['admin']  # Only add language prefix to admin URLs
+I18N_URL_PREFIXES = ['admin']  # Only add language prefix to admin URLs
 
 # API settings
 API_DEFAULT_VERSION = 'v1'
@@ -342,7 +342,4 @@ JAZZMIN_UI_TWEAKS = {
     "actions_sticky_top": False
 }
 
-# Make sure these are set correctly
-FORCE_SCRIPT_NAME = ''
-USE_X_FORWARDED_HOST = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# ... (rest of your existing settings remain the same)
