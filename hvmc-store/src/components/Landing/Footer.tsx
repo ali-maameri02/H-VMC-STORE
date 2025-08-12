@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Instagram, Facebook, Phone, Mail, MapPin } from 'lucide-react';
-import logo from '@/assets/7-removebg-preview-aGct-214.png';
+import logo from '@/assets/7-removebg-preview-214.png';
 
 export const Footer = () => {
   const { t } = useTranslation();
