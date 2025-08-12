@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import socket
 from decouple import config, Csv  # pip install python-decouple
 from django.utils.translation import gettext_lazy as _
 
@@ -8,10 +9,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # === Security ===
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", cast=bool)
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
-
+ALLOWED_HOSTS = [
+    'www.hvmc.store',
+    'hvmc.store',
+    '142.93.180.74',
+    'backend',  # Docker service name
+    'localhost',
+    '127.0.0.1',
+]
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-
+# Get the Docker host IP
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', 'localhost']
 GOOGLE_SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, config("GOOGLE_SERVICE_ACCOUNT_FILE"))
 GOOGLE_CLIENT_SECRET_FILE = os.path.join(BASE_DIR, 'credentials/client_secret_577784229752-l918ioee4s60vhnl55r1ltlar49imufn.apps.googleusercontent.com.json') 
 GOOGLE_REDIRECT_URI = 'http://localhost:8000/oauth2callback/'

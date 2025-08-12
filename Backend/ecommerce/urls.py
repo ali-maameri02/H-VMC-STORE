@@ -28,10 +28,11 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny],
 )
 
+# Non-translatable routes
 urlpatterns = [
     # Language switch endpoint
     path('i18n/', include('django.conf.urls.i18n')),
-    
+
     # Auth and OAuth
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
@@ -41,14 +42,14 @@ urlpatterns = [
     # Swagger docs
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    
-    # API routes
-    path('api/', include('catalog.urls')),
-    path('api/', include('orders.urls')),
-    path('api/', include('accounts.urls')),
-] + i18n_patterns(
+]
+
+# Translatable routes 
+urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
-    prefix_default_language=False
+    path('api/accounts/', include('accounts.urls')),
+    path('api/catalog/', include('catalog.urls')),
+    path('api/orders/', include('orders.urls')),
 )
 
 # Media file serving in development
