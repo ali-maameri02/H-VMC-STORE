@@ -9,6 +9,13 @@ services:
     volumes:
       - static_volume:/app/static
       - media_volume:/app/media
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py migrate &&
+             gunicorn ecommerce.wsgi:application --bind 0.0.0.0:8000"
+    environment:
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_PROXY_SSL_HEADER=HTTP_X_FORWARDED_PROTO,https
     networks:
       - hvmc-network
     restart: unless-stopped
@@ -23,6 +30,8 @@ services:
       POSTGRES_DB: hvmc_prod
       POSTGRES_USER: hvmc_user
       POSTGRES_PASSWORD: strong-password
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256 --auth-local=scram-sha-256
     networks:
       - hvmc-network
     restart: unless-stopped
@@ -65,7 +74,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/hvmc-store/dist  # Use absolute path
+      device: $PWD/hvmc-store/dist
       o: bind
 
 networks:

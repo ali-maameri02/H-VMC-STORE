@@ -105,14 +105,32 @@ DATABASES = {
     }
 }
 
-# === Localization ===
-LANGUAGE_CODE = 'en'
+# Add these to your settings.py
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-LANGUAGES = [
-    ('en', _('English')),
-    ('fr', _('French')),
-    ('ar', _('Arabic')),
+CORS_ALLOWED_ORIGINS = [
+    "https://hvmc.store",
+    "https://www.hvmc.store",
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://hvmc.store",
+    "https://www.hvmc.store",
+]
+
+# Language settings
+LANGUAGE_CODE = 'en'
+LANGUAGES = [
+    ('en', 'English'),
+    ('fr', 'French'),
+    ('ar', 'Arabic'),
+]
+
+# Session settings for admin
+LANGUAGE_COOKIE_NAME = 'django_language'
+LANGUAGE_COOKIE_HTTPONLY = True
+LANGUAGE_COOKIE_SAMESITE = 'Lax'
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
