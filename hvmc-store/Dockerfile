@@ -9,6 +9,6 @@ RUN npm run build
 
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
-COPY ./nginx/conf.d/ecommerce.conf /etc/nginx/conf.d/default.conf
+# Don't copy nginx config here - we'll mount it separately
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
