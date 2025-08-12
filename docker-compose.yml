@@ -28,38 +28,45 @@ services:
     restart: unless-stopped
 
   frontend:
-   build:
-    context: ./hvmc-store
-    dockerfile: Dockerfile
-   container_name: hvmc_frontend
-  # No command/ports (just build static files)
-   networks:
-    - hvmc-network
-   restart: "no"
+    build:
+      context: ./hvmc-store
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+    container_name: hvmc_frontend
+    networks:
+      - hvmc-network
+    restart: "no"
 
   nginx:
-   image: nginx:alpine
-   container_name: hvmc_nginx
-   ports:
-    - "80:80"
-    - "443:443"
-   volumes:
-    - ./nginx/conf.d/ecommerce.conf:/etc/nginx/conf.d/default.conf:ro  # Override default
-    - ./hvmc-store/dist:/usr/share/nginx/html:ro  # Mount built frontend
-    - static_volume:/app/static
-    - media_volume:/app/media
-    - /etc/letsencrypt:/etc/nginx/ssl:ro
-   depends_on:
-    - backend
-    - frontend
-   networks:
-    - hvmc-network
-   restart: unless-stopped
+    image: nginx:alpine
+    container_name: hvmc_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d/ecommerce.conf:/etc/nginx/conf.d/default.conf:ro
+      - frontend_dist:/usr/share/nginx/html:ro
+      - static_volume:/app/static
+      - media_volume:/app/media
+      - /etc/letsencrypt:/etc/nginx/ssl:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - hvmc-network
+    restart: unless-stopped
 
 volumes:
   pg_data:
   static_volume:
   media_volume:
+  frontend_dist:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./hvmc-store/dist
+      o: bind
 
 networks:
   hvmc-network:
