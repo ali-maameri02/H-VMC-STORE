@@ -17,7 +17,6 @@ services:
    build: /root/H-VMC-STORE/hvmc-store
    image: hvmc-frontend
    container_name: hvmc_frontend
-   command: ["sh", "-c", "npm install && npm run build"]
    networks:
     - hvmc-network
    volumes:
