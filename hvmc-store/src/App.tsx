@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         element: <Orders />, // Add this new route
       },
       {
-        path:'/admin/*',
+        path:'/fr/admin/*',
         element:null, // Add this new route
       },
     ],
