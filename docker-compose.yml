@@ -74,7 +74,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: ./hvmc-store/dist  # Relative to compose file
+      device: ${PWD}/hvmc-store/dist  # Use absolute path
       o: bind
 
 networks:
