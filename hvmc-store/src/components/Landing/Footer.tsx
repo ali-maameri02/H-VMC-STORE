@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Instagram, Facebook, Phone, Mail, MapPin } from 'lucide-react';
-// import logo from '@/assets/7-removebg-preview-214.png';
+import logo from '@/assets/7-removebg-preview-214.png';
 
 export const Footer = () => {
   const { t } = useTranslation();
@@ -14,8 +14,8 @@ export const Footer = () => {
           <div className="sm:col-span-2 lg:col-span-1 space-y-4">
             <Link to="/" className="flex items-center gap-2">
               <img 
-  src="/images/logo.png" 
-  className="h-12 w-12 object-contain" 
+                src={logo} 
+                className="h-12 w-12 object-contain" 
                 alt="H-VMC Logo" 
               />
               <span className="text-xl font-light text-[#d6b66d]">
