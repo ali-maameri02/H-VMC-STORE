@@ -1,26 +1,24 @@
 FROM node:20 as builder
-
 WORKDIR /app
 
-# Copy package files first for better caching
+# Copy only package.json to leverage Docker cache
 COPY package.json package-lock.json ./
+
+# Remove lock file & node_modules to force fresh install in container
+RUN rm -f package-lock.json && rm -rf node_modules
+
+# Fresh install
 RUN npm install
 
-# Copy all files
+# Copy the rest of the app
 COPY . .
 
-# Build the application
+# Build
 RUN npm run build
 
-# Production stage
-FROM nginx:alpine
-
-# Copy built assets from builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Copy custom nginx configuration
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Serve stage (optional)
+FROM node:20
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+RUN npm install -g serve
+CMD ["serve", "-s", "dist"]
