@@ -1,16 +1,43 @@
+version: '3.9'
+
 services:
+  backend:
+    build: ./Backend
+    image: hvmc-backend
+    container_name: hvmc_backend
+    env_file: .env.prod
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+    networks:
+      - hvmc-network
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    container_name: hvmc_db
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+    env_file: .env.prod
+    environment:
+      POSTGRES_DB: hvmc_prod
+      POSTGRES_USER: hvmc_user
+      POSTGRES_PASSWORD: strong-password
+    networks:
+      - hvmc-network
+    restart: unless-stopped
+
   frontend:
     build:
       context: ./hvmc-store
       dockerfile: Dockerfile
-    image: hvmc-frontend
     container_name: hvmc_frontend
+    command: npm run build
+    volumes:
+      - ./hvmc-store/dist:/app/dist   # bind mount host dist folder to container
     networks:
       - hvmc-network
-    # No volumes here!
-    # No command override (let Dockerfile CMD run nginx)
-    restart: unless-stopped
-
+    restart: "no"
   nginx:
     image: nginx:alpine
     container_name: hvmc_nginx
@@ -28,16 +55,12 @@ services:
     networks:
       - hvmc-network
     restart: unless-stopped
-  db:
-    image: postgres:16
-    container_name: hvmc_db
-    volumes:
-      - pg_data:/var/lib/postgresql/data/
-    env_file: .env.prod
-    environment:
-      POSTGRES_DB: hvmc_prod
-      POSTGRES_USER: hvmc_user
-      POSTGRES_PASSWORD: strong-password
-    networks:
-      - hvmc-network
-    restart: unless-stopped
+
+volumes:
+  pg_data:
+  static_volume:
+  media_volume:
+
+networks:
+  hvmc-network:
+    driver: bridge
