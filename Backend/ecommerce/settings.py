@@ -128,7 +128,10 @@ USE_TZ = True
 CORS_ALLOW_ALL_ORIGINS = False  # Change this to False
 CORS_ALLOW_CREDENTIALS = True  # Add this line
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://hvmc.store",
+    "https://www.hvmc.store",
+]
 # CSRF_TRUSTED_ORIGINS = [
 #     "http://localhost:5173",  # Also add to CSRF trusted origins
 # ]
