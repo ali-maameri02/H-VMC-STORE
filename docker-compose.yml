@@ -43,6 +43,9 @@ services:
       args:
         - VITE_API_URL=${VITE_API_URL}
     container_name: hvmc_frontend
+    command: tail -f /dev/null  # Keeps container running
+    volumes:
+     - ./hvmc-store/dist:/usr/share/nginx/html
     networks:
       - hvmc-network
     restart: unless-stopped
