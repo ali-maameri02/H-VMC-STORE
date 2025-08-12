@@ -44,12 +44,17 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
 
-# Translatable routes 
+
+urlpatterns = [
+    # API routes (non-i18n)
+    path('api/', include('catalog.urls')),
+    path('api/', include('orders.urls')),
+    path('api/', include('accounts.urls')),
+]
+
 urlpatterns += i18n_patterns(
+    # Admin routes (i18n)
     path('admin/', admin.site.urls),
-    path('api/accounts/', include('accounts.urls')),
-    path('api/catalog/', include('catalog.urls')),
-    path('api/orders/', include('orders.urls')),
 )
 
 # Media file serving in development
