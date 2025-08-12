@@ -43,8 +43,6 @@ services:
     args:
       - VITE_API_URL=${VITE_API_URL:-/fr/api}
    container_name: hvmc_frontend
-   volumes:
-    - frontend_dist:/app/dist  # Changed to /app/dist to match build location
    networks:
     - hvmc-network
    restart: unless-stopped
