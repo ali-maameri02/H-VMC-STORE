@@ -8,9 +8,8 @@ COPY package*.json ./
 
 RUN npm ci
 
-RUN npm rebuild lightningcss
-
-RUN npm install @rollup/rollup-linux-x64-gnu --no-save
+# Remove manual rollup install
+# RUN npm install @rollup/rollup-linux-x64-gnu --no-save
 
 COPY . .
 
