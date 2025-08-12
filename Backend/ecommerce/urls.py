@@ -53,8 +53,8 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(
-    # Admin routes (i18n)
     path('admin/', admin.site.urls),
+    prefix_default_language=False  # Important for your setup
 )
 
 # Media file serving in development
