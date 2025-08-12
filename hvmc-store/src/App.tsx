@@ -59,8 +59,8 @@ const router = createBrowserRouter([
         element: <Orders />, // Add this new route
       },
       {
-        path: '/admin/*',
-        element: null,  // Explicitly ignore all admin routes
+        path:'/fr/admin/*',
+        element:null, // Add this new route
       },
     ],
   },

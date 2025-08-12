@@ -16,7 +16,6 @@ services:
     environment:
       - USE_X_FORWARDED_HOST=1
       - SECURE_PROXY_SSL_HEADER=HTTP_X_FORWARDED_PROTO,https
-      - FORCE_SCRIPT_NAME=
     networks:
       - hvmc-network
     restart: unless-stopped
