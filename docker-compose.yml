@@ -14,14 +14,16 @@ services:
     restart: unless-stopped
 
   frontend:
-    build: /root/H-VMC-STORE/hvmc-store
-    image: hvmc-frontend
-    container_name: hvmc_frontend
-    ports:
-    - "5173:5173"  # Add this for Vite HMR in development
-    networks:
-      - hvmc-network
-    restart: unless-stopped
+   build: /root/H-VMC-STORE/hvmc-store
+   image: hvmc-frontend
+   container_name: hvmc_frontend
+   command: ["sh", "-c", "npm install && npm run build"]
+   networks:
+    - hvmc-network
+   volumes:
+    - ./hvmc-store/dist:/usr/share/nginx/html  # share built files with nginx
+   restart: unless-stopped
+
 
   db:
    image: postgres:16
