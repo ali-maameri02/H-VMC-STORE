@@ -45,7 +45,7 @@ services:
     container_name: hvmc_frontend
     networks:
       - hvmc-network
-    restart: "no"
+    restart: unless-stopped
 
   nginx:
     image: nginx:alpine
