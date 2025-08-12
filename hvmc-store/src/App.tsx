@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Route, RouterProvider } from 'react-router-dom';
 import { CartProvider } from './components/context/Cartcontext';
 import { RootLayout } from './components/RootLayout';
 import Home from './components/Landing/Home';
@@ -58,8 +58,13 @@ const router = createBrowserRouter([
         path: '/orders',
         element: <Orders />, // Add this new route
       },
+      {
+        path:'/admin/*',
+        element:null, // Add this new route
+      },
     ],
   },
+
 ]);
 
 function App() {
