@@ -9,9 +9,10 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    assetsDir: 'assets',  // Explicitly set assets directory
     rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, 'index.html')
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]'  // Consistent asset naming
       }
     }
   },
