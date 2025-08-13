@@ -47,6 +47,8 @@ services:
       - hvmc-network
     environment:
      - NODE_ENV=production  # Ensure production mode
+     - VITE_API_URL=/fr/api  # Explicitly set here as well
+
     restart: unless-stopped
 
   nginx:
