@@ -1,7 +1,7 @@
 import { Search, ShoppingCart, User } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-// import logo from '@/assets/7-removebg-preview-214.png';
+import logo from '@/assets/7-removebg-preview-214.png';
 import { useCart } from '../context/Cartcontext';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -88,8 +88,8 @@ export const Header = () => {
         <div className="flex items-center gap-4">
           <Link to="/" className="flex items-center gap-2">
             <img 
-  src="/assets/7-removebg-preview-214-DlX5KHqB.png" 
-  className="h-16 w-16 object-contain" 
+              src={logo} 
+              className="h-16 w-16 object-contain" 
               alt="H-VMC Logo" 
             />
             <span className="font-light text-sm hidden md:block text-zinc-300">
