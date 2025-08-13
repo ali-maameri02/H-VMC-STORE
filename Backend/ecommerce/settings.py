@@ -114,14 +114,28 @@ DATABASES = {
     }
 }
 
-# Add these to your settings.py
+CORS_ALLOWED_ORIGINS = [
+    "https://www.hvmc.store",
+    "https://hvmc.store",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE']
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# Proxy settings
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-CORS_ALLOWED_ORIGINS = [
-    "https://hvmc.store",
-    "https://www.hvmc.store",
-]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://hvmc.store",

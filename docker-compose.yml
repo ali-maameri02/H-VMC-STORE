@@ -41,7 +41,7 @@ services:
       context: ./hvmc-store
       dockerfile: Dockerfile
       args:
-        - VITE_API_URL=${VITE_API_URL}
+        - VITE_API_URL=/fr/api  # Hardcoded to ensure consistency
     container_name: hvmc_frontend
     networks:
       - hvmc-network
