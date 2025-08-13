@@ -45,6 +45,8 @@ services:
     container_name: hvmc_frontend
     networks:
       - hvmc-network
+    environment:
+     - NODE_ENV=production  # Ensure production mode
     restart: unless-stopped
 
   nginx:
