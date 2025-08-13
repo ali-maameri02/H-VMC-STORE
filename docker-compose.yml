@@ -41,13 +41,13 @@ services:
       context: ./hvmc-store
       dockerfile: Dockerfile
       args:
-        - VITE_API_URL=/api  # Changed from /fr/api
+        - VITE_API_URL=/fr/api  # Changed from /fr/api
     container_name: hvmc_frontend
     networks:
       - hvmc-network
     environment:
       - NODE_ENV=production
-      - VITE_API_URL=/api  # Changed from /fr/api
+      - VITE_API_URL=/fr/api  # Changed from /fr/api
     restart: unless-stopped
 
   nginx:
