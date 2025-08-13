@@ -41,45 +41,38 @@ services:
       context: ./hvmc-store
       dockerfile: Dockerfile
       args:
-        - VITE_API_URL=/fr/api  # Hardcoded to ensure consistency
+        - VITE_API_URL=/api  # Changed from /fr/api
     container_name: hvmc_frontend
     networks:
       - hvmc-network
     environment:
-     - NODE_ENV=production  # Ensure production mode
-     - VITE_API_URL=/fr/api  # Explicitly set here as well
-
+      - NODE_ENV=production
+      - VITE_API_URL=/api  # Changed from /fr/api
     restart: unless-stopped
 
   nginx:
-   image: nginx:alpine
-   container_name: hvmc_nginx
-   ports:
-    - "80:80"
-    - "443:443"
-   volumes:
-    - ./nginx/conf.d/ecommerce.conf:/etc/nginx/conf.d/default.conf:ro
-    - ./hvmc-store/dist:/usr/share/nginx/html:ro
-    - static_volume:/app/static
-    - media_volume:/app/media
-    - /etc/letsencrypt:/etc/nginx/ssl:ro
-   depends_on:
-    - backend
-    - frontend
-   networks:
-    - hvmc-network
-   restart: unless-stopped
+    image: nginx:alpine
+    container_name: hvmc_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d/ecommerce.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./hvmc-store/dist:/usr/share/nginx/html:ro
+      - static_volume:/app/static
+      - media_volume:/app/media
+      - /etc/letsencrypt:/etc/nginx/ssl:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - hvmc-network
+    restart: unless-stopped
 
 volumes:
   pg_data:
   static_volume:
   media_volume:
-  # frontend_dist:
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     device: ./hvmc-store/dist  # Relative to compose file
-  #     o: bind
 
 networks:
   hvmc-network:
