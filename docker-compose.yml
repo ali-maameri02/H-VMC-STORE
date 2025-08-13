@@ -43,8 +43,6 @@ services:
       args:
         - VITE_API_URL=${VITE_API_URL}
     container_name: hvmc_frontend
-    volumes:
-     - ./hvmc-store/dist:/hvmc-store/dist  
     networks:
       - hvmc-network
     restart: unless-stopped
@@ -57,7 +55,7 @@ services:
     - "443:443"
    volumes:
     - ./nginx/conf.d/ecommerce.conf:/etc/nginx/conf.d/default.conf:ro
-    - ./hvmc-store/dist:/hvmc-store/dist:ro  # Consistent path
+    - ./hvmc-store/dist:/usr/share/nginx/html:ro
     - static_volume:/app/static
     - media_volume:/app/media
     - /etc/letsencrypt:/etc/nginx/ssl:ro
