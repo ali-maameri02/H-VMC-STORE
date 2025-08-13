@@ -90,10 +90,10 @@ export const Header = () => {
 <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    width={150}
+    width={48}
     zoomAndPan="magnify"
     viewBox="0 0 375 374.999991"
-    height={150}
+    height={48}
     preserveAspectRatio="xMidYMid meet"
   >
     <defs>
