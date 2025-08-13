@@ -43,8 +43,6 @@ services:
     args:
       - VITE_API_URL=${VITE_API_URL:-/fr/api}
    container_name: hvmc_frontend
-   volumes:
-    - ./hvmc-store/dist:/usr/share/nginx/html:ro  # Match nginx container path
    networks:
     - hvmc-network
    restart: unless-stopped
