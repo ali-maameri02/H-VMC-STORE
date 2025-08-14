@@ -23,52 +23,11 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart();
-  const { t } = useTranslation();
+  const { t } = useTranslation(); // Removed namespace specification
   const navigate = useNavigate();
 
-  const showProductSuccessAlert = () => {
-    toast.custom((toastId) => (
-      <div className="bg-white rounded-lg shadow-xl p-4 border border-green-300 max-w-md">
-        <div className="flex items-start">
-          <div className="flex-shrink-0">
-            <svg className="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <div className="ml-3">
-            <h3 className="text-lg font-medium text-gray-900">{t('order.successTitle')}</h3>
-            <div className="mt-2 text-sm text-gray-500">
-              <p>{t('order.successMessage', { product: product?.name })}</p>
-              <p className="mt-1">{t('order.successContact')}</p>
-            </div>
-            <div className="mt-4 flex gap-2">
-              <button
-                type="button"
-                className="bg-green-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-green-600 focus:outline-none"
-                onClick={() => toast.dismiss(toastId)}
-              >
-                {t('common.ok')}
-              </button>
-              <a 
-                href="https://wa.me/213541779717" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#25D366] text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-[#128C7E] focus:outline-none"
-                onClick={() => toast.dismiss(toastId)}
-              >
-                WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    ), {
-      duration: 10000
-    });
-  };
-
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevent card navigation when clicking button
     if (!product) return;
     
     addToCart({
@@ -78,8 +37,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       image: product.image,
       quantity: 1
     });
-
-    // Show both the small success toast and the detailed alert
     toast.success(t('cart.added'), {
       description: t('cart.addedDescription'),
       action: {
@@ -90,11 +47,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         background: '#4BB543',
         color: 'white'
       }
-    });
-
-    // Show the detailed alert after a short delay
-    setTimeout(showProductSuccessAlert, 500);
-  };
+    });  };
 
   return (
     <Card 

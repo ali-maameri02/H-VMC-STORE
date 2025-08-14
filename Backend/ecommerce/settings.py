@@ -117,6 +117,7 @@ DATABASES = {
 CORS_ALLOWED_ORIGINS = [
     "https://www.hvmc.store",
     "https://hvmc.store",
+    "http://localhost:5173"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -140,6 +141,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_TRUSTED_ORIGINS = [
     "https://hvmc.store",
     "https://www.hvmc.store",
+    "http://localhost:5173"
 ]
 
 # Language settings
@@ -179,6 +181,7 @@ CORS_ALLOW_CREDENTIALS = True  # Add this line
 CSRF_TRUSTED_ORIGINS = [
     "https://hvmc.store",
     "https://www.hvmc.store",
+    "http://localhost:5173"
 ]
 # CSRF_TRUSTED_ORIGINS = [
 #     "http://localhost:5173",  # Also add to CSRF trusted origins

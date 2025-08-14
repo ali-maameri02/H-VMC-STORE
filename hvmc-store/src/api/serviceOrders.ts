@@ -8,8 +8,8 @@ export interface OrderItem {
   date?: string;
   image?: string;
   wilaya?: string;
+  address?: string;
 }
-
 export const submitOrder = async (items: OrderItem | OrderItem[]) => {
   const userData = JSON.parse(localStorage.getItem("userData") || "{}");
   
@@ -17,7 +17,8 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
     name: userData.name || "Client inconnu",
     email: userData.email || "",
     phone: userData.phone || "Non fourni",
-    wilaya: userData.wilaya || "Non spécifiée"
+    wilaya: userData.wilaya || "Non spécifiée",
+    address: userData.address || "Non spécifiée"
   };
 
   try {

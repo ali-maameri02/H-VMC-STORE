@@ -35,14 +35,23 @@
       "phonePlaceholder": "+1 234 567 890",
       "email": "البريد الإلكتروني",
       "emailPlaceholder": "بريدك@الإلكتروني.com",
+      "wilaya": "الولاية",
+      "wilayaPlaceholder": "اختر ولايتك",
+      "address": "العنوان",
+      "addressPlaceholder": "عنوانك الكامل",
       "password": "كلمة المرور",
       "passwordPlaceholder": "••••••",
       "submit": "إنشاء حساب",
+      "submitting": "جاري إنشاء الحساب...",
+      "successMessage": "تم إنشاء الحساب بنجاح!",
+      "errorMessage": "فشل إنشاء الحساب",
       "errors": {
         "name": "يجب أن يحتوي الاسم على الأقل على حرفين",
         "phone": "الرجاء إدخال رقم هاتف صحيح",
         "email": "الرجاء إدخال عنوان بريد إلكتروني صحيح",
-        "password": "يجب أن تحتوي كلمة المرور على الأقل على 6 أحرف"
+        "password": "يجب أن تحتوي كلمة المرور على الأقل على 6 أحرف",
+        "wilaya": "الرجاء اختيار ولايتك",
+        "address": "يجب أن يحتوي العنوان على الأقل على 5 أحرف"
       }
     }
   },
@@ -121,19 +130,14 @@
     "addedDescription": "تمت إضافة المنتج إلى سلة التسوق بنجاح",
     "viewCart": "عرض السلة"
   },
-  "order": {
-    "successTitle": "تم تأكيد الطلب!",
-    "successMessage": "شكراً لطلبك {product}.",
-    "successMessageCart": "تم تقديم طلبك بنجاح.",
-    "successContact": "سيقوم فريقنا بالاتصال بك قريباً.",
-    "viewOrders": "عرض طلباتي"
-  },
   "orderForm": {
     "title": "معلومات الاتصال",
     "description": "الرجاء تقديم معلوماتك لإتمام الطلب",
     "name": "الاسم الكامل",
     "wilaya": "الولاية",
     "selectWilaya": "اختر ولايتك",
+    "address": "العنوان",
+    "addressPlaceholder": "عنوانك الكامل",
     "phone": "رقم الهاتف",
     "submitOrder": "تقديم الطلب"
   },
@@ -205,6 +209,13 @@
     "total": "المجموع",
     "quantity": "الكمية",
     "each": "لكل قطعة"
+  },
+  "order": {
+    "successTitle": "تم تأكيد الطلب!",
+    "successMessage": "شكراً لطلبك {product}.",
+    "successMessageCart": "تم تقديم طلبك بنجاح.",
+    "successContact": "سيقوم فريقنا بالاتصال بك قريباً.",
+    "viewOrders": "عرض طلباتي"
   },
   "footer": {
     "description": "منتجات العناية بالشعر الممتازة للمحترفين والهواة على حد سواء.",

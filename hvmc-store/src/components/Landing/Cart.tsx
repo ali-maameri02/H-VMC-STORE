@@ -9,20 +9,22 @@ import { useState } from 'react';
 
 interface UserData {
   name: string;
-  email?: string;
+  email: string;
   phone: string;
   wilaya?: string;
+  address?: string;
 }
 
 export const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity, cartCount, clearCart } = useCart();
   const { t } = useTranslation();
-  // const navigate = useNavigate();
   const [showOrderForm, setShowOrderForm] = useState(false);
   const [userData, setUserData] = useState<UserData>({
     name: '',
+    email: '',
     phone: '',
-    wilaya: ''
+    wilaya: '',
+    address: ''
   });
 
   const total = cartItems.reduce(
@@ -31,7 +33,7 @@ export const Cart = () => {
   ).toFixed(2).replace('.', ',');
 
   const showSuccessAlert = () => {
-    toast.custom((toastId) => (
+    toast.custom((t) => (
       <div className="bg-white rounded-lg shadow-xl p-4 border border-green-300 max-w-md">
         <div className="flex items-start">
           <div className="flex-shrink-0">
@@ -40,26 +42,19 @@ export const Cart = () => {
             </svg>
           </div>
           <div className="ml-3">
-            <h3 className="text-lg font-medium text-gray-900">{t('order.successTitle')}</h3>
+            <h3 className="text-lg font-medium text-gray-900">Commande confirmée!</h3>
             <div className="mt-2 text-sm text-gray-500">
-              <p>{t('order.successMessageCart')}</p>
-              <p className="mt-1">{t('order.successContact')}</p>
+              <p>Votre commande a été envoyée avec succès.</p>
+              <p className="mt-1">Nous vous contacterons bientôt pour confirmation.</p>
             </div>
-            <div className="mt-4 flex gap-2">
+            <div className="mt-4">
               <button
                 type="button"
                 className="bg-green-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-green-600 focus:outline-none"
-                onClick={() => toast.dismiss(toastId)}
+                onClick={() => toast.dismiss(t)}
               >
-                {t('common.ok')}
+                Compris
               </button>
-              <Link 
-                to="/orders"
-                className="bg-[#d6b66d] text-black px-3 py-1 rounded-md text-sm font-medium hover:bg-[#c9a95d] focus:outline-none"
-                onClick={() => toast.dismiss(toastId)}
-              >
-                {t('order.viewOrders')}
-              </Link>
             </div>
           </div>
         </div>
@@ -88,7 +83,6 @@ export const Cart = () => {
       id: item.id,
       price: item.price.replace(' DA', ''),
       quantity: item.quantity,
-      wilaya: userData.wilaya
     }));
 
     const success = await submitOrder(orderItems);
@@ -98,7 +92,7 @@ export const Cart = () => {
       showSuccessAlert();
     } else {
       toast.error(t('errors.orderFailed'), {
-        description: t('errors.orderFailedDescription'),
+        description: 'Une erreur est survenue lors de la soumission de votre commande.',
         style: {
           background: '#FF3333',
           color: 'white'
@@ -112,7 +106,7 @@ export const Cart = () => {
     
     if (!userData.name || !userData.phone || !userData.wilaya) {
       toast.error(t('errors.missingFields'), {
-        description: t('errors.missingFieldsDescription'),
+        description: 'Veuillez remplir tous les champs obligatoires.',
         style: {
           background: '#FF3333',
           color: 'white'
@@ -213,14 +207,14 @@ export const Cart = () => {
       {showOrderForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4 text-gray-900">{t('orderForm.title')}</h2>
-            <p className="mb-4 text-gray-600">{t('orderForm.description')}</p>
+            <h2 className="text-xl font-bold mb-4 text-gray-900">Informations de contact</h2>
+            <p className="mb-4 text-gray-600">Veuillez fournir vos informations pour finaliser la commande</p>
             
             <form onSubmit={handleUserDataSubmit}>
               <div className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-900">
-                    {t('orderForm.name')} *
+                    Nom complet *
                   </label>
                   <input
                     type="text"
@@ -234,7 +228,7 @@ export const Cart = () => {
                 
                 <div>
                   <label htmlFor="wilaya" className="block text-sm font-medium text-gray-900">
-                    {t('orderForm.wilaya')} *
+                    Wilaya *
                   </label>
                   <select
                     id="wilaya"
@@ -243,7 +237,7 @@ export const Cart = () => {
                     className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
                     required
                   >
-                    <option value="">{t('orderForm.selectWilaya')}</option>
+                    <option value="">Sélectionnez votre wilaya</option>
                     <option value="Adrar">Adrar</option>
                     <option value="Chlef">Chlef</option>
                     <option value="Laghouat">Laghouat</option>
@@ -296,8 +290,34 @@ export const Cart = () => {
                 </div>
                 
                 <div>
+                  <label htmlFor="address" className="block text-sm font-medium text-gray-900">
+                    Adresse complète
+                  </label>
+                  <textarea
+                    id="address"
+                    value={userData.address || ''}
+                    onChange={(e) => setUserData({...userData, address: e.target.value})}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
+                    rows={3}
+                  />
+                </div>
+                
+                <div className="hidden">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={userData.email}
+                    onChange={(e) => setUserData({...userData, email: e.target.value})}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
+                  />
+                </div>
+                
+                <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-900">
-                    {t('orderForm.phone')} *
+                    Téléphone *
                   </label>
                   <input
                     type="tel"
@@ -317,13 +337,13 @@ export const Cart = () => {
                   className="text-gray-900 border-gray-300 hover:bg-gray-100"
                   onClick={() => setShowOrderForm(false)}
                 >
-                  {t('common.cancel')}
+                  Annuler
                 </Button>
                 <Button
                   type="submit"
                   className="bg-[#d6b66d] hover:bg-[#c9a95d] text-gray-900"
                 >
-                  {t('orderForm.submitOrder')}
+                  Confirmer la commande
                 </Button>
               </div>
             </form>

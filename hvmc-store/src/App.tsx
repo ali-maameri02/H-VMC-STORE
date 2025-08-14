@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Orders } from './components/Landing/Orders';
 import { SearchProvider } from './components/context/SearchContext';
+import { Toaster } from 'sonner';
 
 const TranslationLoader = ({ children }: { children: React.ReactNode }) => {
   const { i18n } = useTranslation();
@@ -72,6 +73,8 @@ function App() {
     <I18nextProvider i18n={i18n}>
       <TranslationLoader>
         <LanguageProvider>
+        <Toaster richColors position="top-center" />
+
         <SearchProvider>
           <CartProvider>
             <RouterProvider router={router} />

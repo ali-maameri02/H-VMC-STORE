@@ -3,7 +3,6 @@ from .models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.translation import gettext_lazy as _  
 
-
 class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True,
@@ -16,23 +15,23 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'name', 'phone', 'email', 'password']
+        fields = ['id', 'name', 'phone', 'email', 'password', 'wilaya', 'address']
         extra_kwargs = {
             'name': {'error_messages': {'blank': _("Name is required.")}},
             'email': {'error_messages': {'blank': _("Email is required."), 'invalid': _("Enter a valid email address.")}},
             'phone': {'error_messages': {'blank': _("Phone number is required.")}},
+            'wilaya': {'error_messages': {'blank': _("Wilaya is required.")}},
+            'address': {'error_messages': {'blank': _("Address is required.")}},
         }
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
 
-
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-
-        # Add custom claims
         token['name'] = user.name
         token['phone'] = user.phone
+        token['wilaya'] = user.wilaya
         return token

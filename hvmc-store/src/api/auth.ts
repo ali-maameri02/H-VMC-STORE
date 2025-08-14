@@ -6,25 +6,22 @@ export const apiClient = axios.create({
     'Accept': 'application/json',
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Essential for CSRF
+  withCredentials: true,
 });
 
-// Enhanced request interceptor
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   
-  // Ensure CSRF token is included for Django
   if (['post', 'put', 'patch', 'delete'].includes(config.method?.toLowerCase() || '')) {
-    config.headers['X-CSRFToken'] = getCSRFToken(); // You'll need to implement this
+    config.headers['X-CSRFToken'] = getCSRFToken();
   }
   
   return config;
 });
 
-// Response interceptor to handle token refresh
 apiClient.interceptors.response.use(
   response => response,
   async error => {
@@ -48,9 +45,7 @@ apiClient.interceptors.response.use(
   }
 );
 
-// Helper function to get CSRF token
 function getCSRFToken() {
-  // This matches Django's CSRF cookie name
   const cookieValue = document.cookie
     .split('; ')
     .find(row => row.startsWith('csrftoken='))
@@ -58,12 +53,15 @@ function getCSRFToken() {
     
   return cookieValue || '';
 }
+
 export const authService = {
   async register(userData: {
     name: string;
     phone: string;
     email: string;
     password: string;
+    wilaya: string;
+    address: string;
   }) {
     return apiClient.post('/accounts/register/', userData);
   },
@@ -73,7 +71,6 @@ export const authService = {
     password: string;
   }) {
     const response = await apiClient.post('/accounts/login/', credentials);
-    // Save tokens to localStorage
     if (response.data?.access && response.data?.refresh) {
       localStorage.setItem('accessToken', response.data.access);
       localStorage.setItem('refreshToken', response.data.refresh);
@@ -82,12 +79,10 @@ export const authService = {
   },
 
   async logout() {
-    // Clear tokens from localStorage
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
   },
 
-  // Add token refresh method if needed
   async refreshToken() {
     const refreshToken = localStorage.getItem('refreshToken');
     if (!refreshToken) throw new Error('No refresh token available');
@@ -99,6 +94,6 @@ export const authService = {
     if (response.data?.access) {
       localStorage.setItem('accessToken', response.data.access);
     }
-    return response;
+    return response.data.access;
   }
 };

@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 import { authService } from '@/api/auth';
 
 export const useAuthState = () => {
-  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const [user, setUser] = useState<{ 
+    name: string; 
+    email: string;
+    wilaya?: string;
+    address?: string;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -10,11 +15,12 @@ export const useAuthState = () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
-          // You might want to add an endpoint to fetch user data
-          // For now, we'll just check if token exists
+          const userData = JSON.parse(localStorage.getItem('userData') || '{}');
           setUser({ 
-            name: localStorage.getItem('userName') || 'User',
-            email: localStorage.getItem('userEmail') || ''
+            name: userData.name || 'User',
+            email: userData.email || '',
+            wilaya: userData.wilaya,
+            address: userData.address
           });
         }
       } catch (error) {
@@ -29,12 +35,13 @@ export const useAuthState = () => {
 
   const login = async (credentials: { email: string; password: string }) => {
     const response = await authService.login(credentials);
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
     setUser({ 
-      name: response.data.user?.name || 'User',
-      email: credentials.email
+      name: userData.name || 'User',
+      email: credentials.email,
+      wilaya: userData.wilaya,
+      address: userData.address
     });
-    localStorage.setItem('userName', response.data.user?.name || 'User');
-    localStorage.setItem('userEmail', credentials.email);
     return response;
   };
 
@@ -42,23 +49,31 @@ export const useAuthState = () => {
     name: string; 
     phone: string; 
     email: string; 
-    password: string 
+    password: string;
+    wilaya: string;
+    address: string;
   }) => {
     const response = await authService.register(userData);
     setUser({ 
       name: userData.name,
-      email: userData.email
+      email: userData.email,
+      wilaya: userData.wilaya,
+      address: userData.address
     });
-    localStorage.setItem('userName', userData.name);
-    localStorage.setItem('userEmail', userData.email);
+    localStorage.setItem('userData', JSON.stringify({
+      name: userData.name,
+      email: userData.email,
+      phone: userData.phone,
+      wilaya: userData.wilaya,
+      address: userData.address
+    }));
     return response;
   };
 
   const logout = async () => {
     await authService.logout();
     setUser(null);
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userData');
   };
 
   return { user, loading, login, register, logout };
