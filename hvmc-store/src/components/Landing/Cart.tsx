@@ -22,13 +22,42 @@ export const Cart = () => {
     0
   ).toFixed(2).replace('.', ',');
 
+  const showSuccessAlert = () => {
+    toast.custom((t) => (
+      <div className="bg-white rounded-lg shadow-xl p-4 border border-green-300 max-w-md">
+        <div className="flex items-start">
+          <div className="flex-shrink-0">
+            <svg className="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <div className="ml-3">
+            <h3 className="text-lg font-medium text-gray-900">Commande confirmée!</h3>
+            <div className="mt-2 text-sm text-gray-500">
+              <p>Votre commande a été envoyée avec succès.</p>
+              <p className="mt-1">Nous vous contacterons bientôt pour confirmation.</p>
+            </div>
+            <div className="mt-4">
+              <button
+                type="button"
+                className="bg-green-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-green-600 focus:outline-none"
+                onClick={() => toast.dismiss(t)}
+              >
+                Compris
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    ));
+  };
+
   const handleOrderAll = async () => {
     if (cartItems.length === 0) {
       toast.warning(t('cart.emptyWarning'));
       return;
     }
 
-    // Check if user data exists
     const storedUserData = localStorage.getItem("userData");
     if (!storedUserData || !JSON.parse(storedUserData).name) {
       setShowOrderForm(true);
@@ -50,22 +79,32 @@ export const Cart = () => {
     
     if (success) {
       clearCart();
-      toast.success(t('cart.orderSuccess'));
+      showSuccessAlert();
     } else {
-      toast.error(t('errors.orderFailed'));
+      toast.error(t('errors.orderFailed'), {
+        description: 'Une erreur est survenue lors de la soumission de votre commande.',
+        style: {
+          background: '#FF3333',
+          color: 'white'
+        }
+      });
     }
   };
 
   const handleUserDataSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Basic validation
     if (!userData.name || !userData.phone) {
-      toast.error(t('errors.missingFields'));
+      toast.error(t('errors.missingFields'), {
+        description: 'Veuillez remplir tous les champs obligatoires.',
+        style: {
+          background: '#FF3333',
+          color: 'white'
+        }
+      });
       return;
     }
     
-    // Save user data to localStorage
     localStorage.setItem("userData", JSON.stringify(userData));
     setShowOrderForm(false);
     proceedWithOrder();
@@ -151,84 +190,80 @@ export const Cart = () => {
             >
               {t('cart.orderAll')}
             </Button>
-            {/* <Button className="w-full" asChild>
-              <Link to="/checkout">{t('cart.checkout')}</Link>
-            </Button> */}
           </div>
         </div>
       )}
 
-      {/* Order Form Modal */}
       {showOrderForm && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-    <div className="bg-white rounded-lg p-6 max-w-md w-full">
-      <h2 className="text-xl font-bold mb-4 text-gray-900">{t('orderForm.title')}</h2>
-      <p className="mb-4 text-gray-600">{t('orderForm.description')}</p>
-      
-      <form onSubmit={handleUserDataSubmit}>
-        <div className="space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-900">
-              {t('orderForm.name')} *
-            </label>
-            <input
-              type="text"
-              id="name"
-              value={userData.name}
-              onChange={(e) => setUserData({...userData, name: e.target.value})}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
-              required
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-900">
-              {t('orderForm.email')}
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={userData.email}
-              onChange={(e) => setUserData({...userData, email: e.target.value})}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-900">
-              {t('orderForm.phone')} *
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              value={userData.phone}
-              onChange={(e) => setUserData({...userData, phone: e.target.value})}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
-              required
-            />
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h2 className="text-xl font-bold mb-4 text-gray-900">Informations de contact</h2>
+            <p className="mb-4 text-gray-600">Veuillez fournir vos informations pour finaliser la commande</p>
+            
+            <form onSubmit={handleUserDataSubmit}>
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-900">
+                    Nom complet *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={userData.name}
+                    onChange={(e) => setUserData({...userData, name: e.target.value})}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={userData.email}
+                    onChange={(e) => setUserData({...userData, email: e.target.value})}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-900">
+                    Téléphone *
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    value={userData.phone}
+                    onChange={(e) => setUserData({...userData, phone: e.target.value})}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
+                    required
+                  />
+                </div>
+              </div>
+              
+              <div className="mt-6 flex justify-end gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="text-gray-900 border-gray-300 hover:bg-gray-100"
+                  onClick={() => setShowOrderForm(false)}
+                >
+                  Annuler
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-[#d6b66d] hover:bg-[#c9a95d] text-gray-900"
+                >
+                  Confirmer la commande
+                </Button>
+              </div>
+            </form>
           </div>
         </div>
-        
-        <div className="mt-6 flex justify-end gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            className="text-gray-900 border-gray-300 hover:bg-gray-100"
-            onClick={() => setShowOrderForm(false)}
-          >
-            {t('orderForm.cancel')}
-          </Button>
-          <Button
-            type="submit"
-            className="bg-[#d6b66d] hover:bg-[#c9a95d] text-gray-900"
-          >
-            {t('orderForm.submitOrder')}
-          </Button>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
+      )}
     </div>
   );
 };
