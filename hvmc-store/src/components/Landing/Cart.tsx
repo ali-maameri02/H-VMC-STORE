@@ -1,6 +1,6 @@
 import { Button } from "../ui/button";
 import { useCart } from '../context/Cartcontext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { TrashIcon } from "lucide-react";
 import { submitOrder } from '@/api/serviceOrders';
 import { toast } from "sonner";
