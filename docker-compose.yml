@@ -2,7 +2,9 @@ version: '3.9'
 
 services:
   backend:
-    build: ./Backend
+    build: 
+      context: ./Backend
+      dockerfile: Dockerfile
     image: hvmc-backend
     container_name: hvmc_backend
     env_file: .env.prod
@@ -12,13 +14,18 @@ services:
     command: >
       sh -c "python manage.py collectstatic --noinput &&
              python manage.py migrate &&
-             gunicorn ecommerce.wsgi:application --bind 0.0.0.0:8000"
+             gunicorn ecommerce.wsgi:application --bind 0.0.0.0:8000 --workers 3"
     environment:
       - USE_X_FORWARDED_HOST=1
       - SECURE_PROXY_SSL_HEADER=HTTP_X_FORWARDED_PROTO,https
     networks:
       - hvmc-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   db:
     image: postgres:16
@@ -27,28 +34,39 @@ services:
       - pg_data:/var/lib/postgresql/data/
     env_file: .env.prod
     environment:
-      POSTGRES_DB: hvmc_prod
-      POSTGRES_USER: hvmc_user
-      POSTGRES_PASSWORD: strong-password
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_HOST_AUTH_METHOD: scram-sha-256
       POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256 --auth-local=scram-sha-256
     networks:
       - hvmc-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   frontend:
     build:
       context: ./hvmc-store
       dockerfile: Dockerfile
       args:
-        - VITE_API_URL=/fr/api  # Changed from /fr/api
+        - VITE_API_URL=/fr/api
+    image: hvmc-frontend
     container_name: hvmc_frontend
     networks:
       - hvmc-network
     environment:
       - NODE_ENV=production
-      - VITE_API_URL=/fr/api  # Changed from /fr/api
+      - VITE_API_URL=/fr/api
+    volumes:
+      - ./hvmc-store/dist:/usr/share/nginx/html
     restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
 
   nginx:
     image: nginx:alpine
@@ -62,6 +80,7 @@ services:
       - static_volume:/app/static
       - media_volume:/app/media
       - /etc/letsencrypt:/etc/nginx/ssl:ro
+      - nginx_logs:/var/log/nginx
     depends_on:
       - backend
       - frontend
@@ -73,6 +92,7 @@ volumes:
   pg_data:
   static_volume:
   media_volume:
+  nginx_logs:
 
 networks:
   hvmc-network:
