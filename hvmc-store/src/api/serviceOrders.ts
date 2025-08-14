@@ -15,7 +15,7 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
   const basePayload = {
     name: userData.name || "Client inconnu",
     email: userData.email || "",
-    phone: userData.phone || "Client inconnu",
+    phone: userData.phone || "Client inconnu", // This will be just the phone number value
   };
 
   try {
@@ -34,14 +34,15 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
     const existingOrders = JSON.parse(localStorage.getItem("userOrders") || "[]");
     localStorage.setItem("userOrders", JSON.stringify([...existingOrders, ...ordersWithDate]));
     
-    // Submit to Google Sheets
+    // Submit to Google Sheets - Modified to send just the phone number value
     for (const item of orders) {
       const fullPayload = {
         ...basePayload,
         productname: item.productname,
         id: item.id,
         price: item.price,
-        quantity: item.quantity
+        quantity: item.quantity,
+        phone: basePayload.phone // This is already just the value
       };
 
       const response = await fetch("https://script.google.com/macros/s/AKfycbzD7upin5Kbl8z8axksNvfZeIKnAVFLdkuNiegJ4qLOf5H-DDDaNUgzNGW4xpsh3fjJ8g/exec", {

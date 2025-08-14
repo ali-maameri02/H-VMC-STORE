@@ -151,9 +151,9 @@ export const Cart = () => {
             >
               {t('cart.orderAll')}
             </Button>
-            <Button className="w-full" asChild>
+            {/* <Button className="w-full" asChild>
               <Link to="/checkout">{t('cart.checkout')}</Link>
-            </Button>
+            </Button> */}
           </div>
         </div>
       )}
