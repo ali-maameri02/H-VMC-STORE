@@ -7,6 +7,7 @@ export interface OrderItem {
   quantity: number;
   date?: string;
   image?: string;
+  wilaya?: string;
 }
 
 export const submitOrder = async (items: OrderItem | OrderItem[]) => {
@@ -15,14 +16,14 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
   const basePayload = {
     name: userData.name || "Client inconnu",
     email: userData.email || "",
-    phone: userData.phone || "Client inconnu", // This will be just the phone number value
+    phone: userData.phone || "Non fourni",
+    wilaya: userData.wilaya || "Non spécifiée"
   };
 
   try {
     const orders = Array.isArray(items) ? items : [items];
     const timestamp = new Date().toISOString();
     
-    // Prepare orders for localStorage
     const ordersWithDate = orders.map(item => ({
       ...basePayload,
       ...item,
@@ -30,19 +31,16 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
       image: item.image || '/placeholder-product.jpg'
     }));
     
-    // Save to localStorage
     const existingOrders = JSON.parse(localStorage.getItem("userOrders") || "[]");
     localStorage.setItem("userOrders", JSON.stringify([...existingOrders, ...ordersWithDate]));
     
-    // Submit to Google Sheets - Modified to send just the phone number value
     for (const item of orders) {
       const fullPayload = {
         ...basePayload,
         productname: item.productname,
         id: item.id,
         price: item.price,
-        quantity: item.quantity,
-        phone: basePayload.phone // This is already just the value
+        quantity: item.quantity
       };
 
       const response = await fetch("https://script.google.com/macros/s/AKfycbzD7upin5Kbl8z8axksNvfZeIKnAVFLdkuNiegJ4qLOf5H-DDDaNUgzNGW4xpsh3fjJ8g/exec", {

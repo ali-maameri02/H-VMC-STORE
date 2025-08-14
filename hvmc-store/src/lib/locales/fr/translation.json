@@ -116,16 +116,24 @@
     "remove": "Supprimer",
     "update": "Mettre à jour",
     "emptyWarning": "Le panier est vide, ajoutez d'abord des produits",
-    "orderSuccess": "Commande passée avec succès"
+    "orderSuccess": "Commande passée avec succès",
+    "added": "Ajouté au panier",
+    "addedDescription": "Produit ajouté au panier avec succès",
+    "viewCart": "Voir le panier"
   },
   "orderForm": {
-    "title": "Finaliser la commande",
+    "title": "Informations de contact",
     "description": "Veuillez fournir vos informations pour finaliser la commande",
     "name": "Nom complet",
-    "email": "Email",
+    "wilaya": "Wilaya",
+    "selectWilaya": "Sélectionnez votre wilaya",
     "phone": "Numéro de téléphone",
-    "cancel": "Annuler",
     "submitOrder": "Passer la commande"
+    
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Annuler"
   },
   "errors": {
     "categoryProducts": "Échec du chargement des produits de la catégorie",
@@ -141,6 +149,13 @@
     "total": "Total",
     "quantity": "Quantité",
     "each": "chaque"
+  },
+  "order": {
+    "successTitle": "Commande confirmée!",
+    "successMessage": "Merci pour votre commande de {product}.",
+    "successMessageCart": "Votre commande a été passée avec succès.",
+    "successContact": "Notre équipe vous contactera sous peu.",
+    "viewOrders": "Voir mes commandes"
   },
   "footer": {
     "description": "Produits capillaires premium pour les professionnels et les passionnés.",

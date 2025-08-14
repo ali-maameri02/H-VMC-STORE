@@ -14,5 +14,4 @@ export const products = [
         "Câble rotatif anti-nœuds"
       ]
     },
-    // Add other products...
   ];
