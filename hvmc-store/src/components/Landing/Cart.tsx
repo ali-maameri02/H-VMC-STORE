@@ -160,74 +160,75 @@ export const Cart = () => {
 
       {/* Order Form Modal */}
       {showOrderForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4">{t('orderForm.title')}</h2>
-            <p className="mb-4 text-gray-600">{t('orderForm.description')}</p>
-            
-            <form onSubmit={handleUserDataSubmit}>
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                    {t('orderForm.name')} *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={userData.name}
-                    onChange={(e) => setUserData({...userData, name: e.target.value})}
-                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    {t('orderForm.email')}
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={userData.email}
-                    onChange={(e) => setUserData({...userData, email: e.target.value})}
-                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                    {t('orderForm.phone')} *
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    value={userData.phone}
-                    onChange={(e) => setUserData({...userData, phone: e.target.value})}
-                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                    required
-                  />
-                </div>
-              </div>
-              
-              <div className="mt-6 flex justify-end gap-3">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setShowOrderForm(false)}
-                >
-                  {t('orderForm.cancel')}
-                </Button>
-                <Button
-                  type="submit"
-                  className="bg-[#d6b66d] hover:bg-[#c9a95d] text-black"
-                >
-                  {t('orderForm.submitOrder')}
-                </Button>
-              </div>
-            </form>
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="bg-white rounded-lg p-6 max-w-md w-full">
+      <h2 className="text-xl font-bold mb-4 text-gray-900">{t('orderForm.title')}</h2>
+      <p className="mb-4 text-gray-600">{t('orderForm.description')}</p>
+      
+      <form onSubmit={handleUserDataSubmit}>
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-900">
+              {t('orderForm.name')} *
+            </label>
+            <input
+              type="text"
+              id="name"
+              value={userData.name}
+              onChange={(e) => setUserData({...userData, name: e.target.value})}
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
+              required
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+              {t('orderForm.email')}
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={userData.email}
+              onChange={(e) => setUserData({...userData, email: e.target.value})}
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-900">
+              {t('orderForm.phone')} *
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              value={userData.phone}
+              onChange={(e) => setUserData({...userData, phone: e.target.value})}
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
+              required
+            />
           </div>
         </div>
-      )}
+        
+        <div className="mt-6 flex justify-end gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            className="text-gray-900 border-gray-300 hover:bg-gray-100"
+            onClick={() => setShowOrderForm(false)}
+          >
+            {t('orderForm.cancel')}
+          </Button>
+          <Button
+            type="submit"
+            className="bg-[#d6b66d] hover:bg-[#c9a95d] text-gray-900"
+          >
+            {t('orderForm.submitOrder')}
+          </Button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
     </div>
   );
 };
