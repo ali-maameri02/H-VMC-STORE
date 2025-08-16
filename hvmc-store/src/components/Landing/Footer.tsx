@@ -1,25 +1,26 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Instagram, Facebook, Phone, Mail, MapPin } from 'lucide-react';
-// import logo from '@/assets/7-removebg-preview-214.png';
+import '@/lib/rtl.css'
 
 export const Footer = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
+  const isRTL = currentLanguage === 'ar';
 
   return (
-    <footer className="bg-white text-black pt-12 pb-6">
+    <footer className={`bg-gradient-to-r from-black via-black to-zinc-900 text-white pt-12 pb-6 ${isRTL ? 'rtl' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
           {/* Brand Info */}
           <div className="sm:col-span-2 lg:col-span-1 space-y-4">
-            <Link to="/" className="flex items-center gap-2">
-            <svg
+          <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    width={48}
+    width={100}
     zoomAndPan="magnify"
     viewBox="0 0 375 374.999991"
-    height={48}
+    height={100}
     preserveAspectRatio="xMidYMid meet"
   >
     <defs>
@@ -453,12 +454,14 @@ export const Footer = () => {
         </mask>
       </g>
     </g>
-  </svg>     
-              <span className="text-xl font-light text-black">
+  </svg> 
+            <Link to="/" className="flex items-center gap-2">
+      
+              <span className="text-xl font-light text-[#d6b66d]">
                 {t('header.title')}
               </span>
             </Link>
-            <p className="text-black text-sm max-w-md">
+            <p className="text-zinc-300 text-sm max-w-md">
               {t('footer.description')}
             </p>
             <div className="flex gap-4">
@@ -466,7 +469,7 @@ export const Footer = () => {
                 href="https://www.instagram.com/hamza_hvmc?igsh=aDRmYmIyZXB6ZTl3" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-black hover:text-black transition-colors"
+                className="text-zinc-300 hover:text-[#d6b66d] transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
@@ -475,7 +478,7 @@ export const Footer = () => {
                 href="https://www.facebook.com/share/17DL6zLgMj/?mibextid=wwXIfr" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-black hover:text-black transition-colors"
+                className="text-zinc-300 hover:text-[#d6b66d] transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
@@ -485,22 +488,22 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-lg font-medium text-black">
+            <h3 className="text-lg font-medium text-[#d6b66d]">
               {t('footer.quickLinks')}
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-black hover:text-black text-sm transition-colors block py-1">
+                <Link to="/" className="text-zinc-300 hover:text-[#d6b66d] text-sm transition-colors block py-1">
                   {t('footer.home')}
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="text-black hover:text-black text-sm transition-colors block py-1">
+                <Link to="/products" className="text-zinc-300 hover:text-[#d6b66d] text-sm transition-colors block py-1">
                   {t('footer.products')}
                 </Link>
               </li>
               <li>
-                <Link to="/cart" className="text-black hover:text-black text-sm transition-colors block py-1">
+                <Link to="/cart" className="text-zinc-300 hover:text-[#d6b66d] text-sm transition-colors block py-1">
                   {t('footer.cart')}
                 </Link>
               </li>
@@ -509,42 +512,47 @@ export const Footer = () => {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h3 className="text-lg font-medium text-black">
+            <h3 className="text-lg font-medium text-[#d6b66d]">
               {t('footer.contact')}
             </h3>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2 text-black text-sm">
-                <Phone className="h-4 w-4 text-black mt-0.5 flex-shrink-0" />
-                <a href="tel:+213541779717" className="hover:text-black transition-colors">
+              <li className={`flex items-start gap-2 text-zinc-300 text-sm ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <Phone className="h-4 w-4 text-[#d6b66d] mt-0.5 flex-shrink-0" />
+                <a 
+                  href="tel:+213541779717" 
+                  className="hover:text-[#d6b66d] transition-colors ltr-number"
+                  dir="ltr"
+                >
                   +213 541 779 717
                 </a>
               </li>
-              <li className="flex items-start gap-2 text-black text-sm">
-                <Mail className="h-4 w-4 text-black mt-0.5 flex-shrink-0" />
-                <a href="mailto:H.vmcoif@gmail.com" className="hover:text-black transition-colors">
+              <li className={`flex items-start gap-2 text-zinc-300 text-sm ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <Mail className="h-4 w-4 text-[#d6b66d] mt-0.5 flex-shrink-0" />
+                <a href="mailto:H.vmcoif@gmail.com" className="hover:text-[#d6b66d] transition-colors">
                   H.vmcoif@gmail.com
                 </a>
               </li>
-              <li className="flex items-start gap-2 text-black text-sm">
-                <MapPin className="h-4 w-4 text-black mt-0.5 flex-shrink-0" />
-                <span>Amirouche rue, Algiers, Algeria</span>
+              <li className={`flex items-start gap-2 text-zinc-300 text-sm ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <MapPin className="h-4 w-4 text-[#d6b66d] mt-0.5 flex-shrink-0" />
+                <span>{t('footer.address')}</span>
               </li>
+
             </ul>
           </div>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3195.5369982517436!2d3.2392560748944415!3d36.781673268745244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128e4f385de0bb13%3A0xfafd51a28ab1f4ab!2sH-VMC!5e0!3m2!1sfr!2sdz!4v1755373699627!5m2!1sfr!2sdz" width="200" height="200" style={{border:0}} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
 
-     
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-zinc-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className={`border-t border-zinc-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 ${isRTL ? 'rtl' : ''}`}>
           <p className="text-zinc-400 text-xs text-center md:text-left">
             &copy; {new Date().getFullYear()} {t('footer.copyright')}
           </p>
           <div className="flex gap-4">
-            <Link to="/privacy" className="text-zinc-400 hover:text-black text-xs transition-colors">
+            <Link to="/privacy" className="text-zinc-400 hover:text-[#d6b66d] text-xs transition-colors">
               {t('footer.privacy')}
             </Link>
-            <Link to="/terms" className="text-zinc-400 hover:text-black text-xs transition-colors">
+            <Link to="/terms" className="text-zinc-400 hover:text-[#d6b66d] text-xs transition-colors">
               {t('footer.terms')}
             </Link>
           </div>

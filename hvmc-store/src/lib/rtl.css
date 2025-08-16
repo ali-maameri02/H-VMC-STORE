@@ -1,5 +1,7 @@
 [dir="rtl"] * {
     direction: rtl;
+    unicode-bidi: isolate;
+
   }
   
   /* Add any RTL-specific styles here */
@@ -10,5 +12,20 @@
   [dir="rtl"] .text-left {
     text-align: right !important;
   }
+  [dir="rtl"] .phone {
+    text-align: right !important;
+    unicode-bidi: isolate;
+
+  }
+
+.ltr-number {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* Adjust flex direction for RTL */
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
   
   /* Add more RTL overrides as needed */

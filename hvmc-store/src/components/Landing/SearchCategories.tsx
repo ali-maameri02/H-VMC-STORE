@@ -36,7 +36,7 @@ export const SearchCategories = () => {
 
   if (loading) {
     return (
-      <section className="px-4 py-6 space-y-6 bg-white text-black mt-96">
+      <section className="px-4 py-6 space-y-6 bg-gradient-to-r from-black via-black to-zinc-900 mt-96">
         <div className="flex justify-center">
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4 max-w-7xl mx-auto">
             {[...Array(12)].map((_, index) => (
@@ -52,7 +52,7 @@ export const SearchCategories = () => {
   }
 
   return (
-    <section className="px-4 py-6 space-y-6 bg-white text-black mt-52">
+    <section className="px-4 py-6 space-y-6 bg-gradient-to-r from-black via-black to-zinc-900 mt-52">
       <div className="flex justify-center">
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4 max-w-7xl mx-auto">
           {categories.map((category) => (
