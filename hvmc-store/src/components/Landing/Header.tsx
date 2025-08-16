@@ -82,7 +82,7 @@ export const Header = () => {
   );
 
   return (
-    <header className="bg-gradient-to-r from-black via-black to-zinc-900 text-white fixed w-full top-0 z-50 shadow-lg">
+    <header className="bg-white text-black fixed w-full top-0 z-50 shadow-lg">
       {/* Top Navigation Bar */}
       <div className="container mx-auto px-4 py-3 pb-0 flex justify-between items-center border-b border-zinc-800">
         <div className="flex items-center gap-4">
@@ -545,7 +545,7 @@ export const Header = () => {
               >
                 <ShoppingCart className="h-5 w-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-transparent text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hover:text-[#d6b66d]">
+                  <span className="absolute -top-1 -right-1 bg-transparent text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hover:text-[#d6b66d]">
                     {cartCount}
                   </span>
                 )}
@@ -553,7 +553,7 @@ export const Header = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent 
               align="end" 
-              className="w-72 p-4 bg-zinc-900 border-zinc-700 text-white"
+              className="w-72 p-4 bg-white border-transparent text-black"
             >
               {cartCount === 0 ? (
                 <div className="text-center py-4">
@@ -608,17 +608,17 @@ export const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent 
                 align="end" 
-                className="w-56 bg-zinc-900 border-zinc-700 text-white"
+                className="w-56 bg-white text-black"
               >
                
                 <DropdownMenuItem 
-                  className="hover:bg-zinc-800 cursor-pointer"
+                  className="hover:bg-black-800 cursor-pointer"
                   onClick={() => navigate('/orders')}
                 >
                   {t('header.orders')}
                 </DropdownMenuItem>
                 <DropdownMenuItem 
-                  className="hover:bg-zinc-800 cursor-pointer text-red-400"
+                  className="hover:bg-black-800 cursor-pointer text-red-400"
                   onClick={handleLogout}
                 >
                   {t('header.logout')}
@@ -649,17 +649,17 @@ export const Header = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent 
               align="end" 
-              className="w-40 bg-zinc-900 border-zinc-700 text-white"
+              className="w-40 bg-white text-black"
             >
               <DropdownMenuItem 
-                className="flex items-center gap-2 hover:bg-zinc-800"
+                className="flex items-center gap-2 hover:bg-black-800"
                 onClick={() => changeLanguage('fr')}
               >
                 <FrenchFlag />
                 <span>Français</span>
               </DropdownMenuItem>
               <DropdownMenuItem 
-                className="flex items-center gap-2 hover:bg-zinc-800"
+                className="flex items-center gap-2 hover:bg-black-800"
                 onClick={() => changeLanguage('ar')}
               >
                 <AlgerianFlag />
@@ -686,7 +686,7 @@ export const Header = () => {
             <Input
     type="search"
     placeholder={t('home.searchPlaceholder')}
-    className="pl-10 py-6 rounded-full bg-zinc-100 border-0 focus-visible:ring-2 focus-visible:ring-primary/50 text-black"
+    className="pl-10 py-6 rounded-full bg-black-100 border-0 focus-visible:ring-2 focus-visible:ring-primary/50 text-black"
     value={searchQuery}
     onChange={handleSearchChange}
   />
