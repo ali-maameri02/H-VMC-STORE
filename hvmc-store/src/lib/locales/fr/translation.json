@@ -86,6 +86,8 @@
     "addToCart": "Ajouter au panier",
     "orderNow": "Commander maintenant",
     "back": "Retour",
+    "submitting": "Envoi en cours...",
+
     "loading": "Chargement du produit...",
     "notFound": "Produit non trouvé",
     "notFoundDescription": "Le produit que vous recherchez n'existe pas",
@@ -215,7 +217,9 @@
     "successMessage": "Merci pour votre commande de {product}.",
     "successMessageCart": "Votre commande a été passée avec succès.",
     "successContact": "Notre équipe vous contactera sous peu.",
-    "viewOrders": "Voir mes commandes"
+    "viewOrders": "Voir mes commandes",  
+      "submitting": "Envoi en cours..."
+
   },
   "footer": {
     "description": "Produits capillaires premium pour les professionnels et les passionnés.",
@@ -232,7 +236,7 @@
     "copyright": "H-VMC Beauty. Tous droits réservés.",
     "privacy": "Politique de confidentialité",
     "terms": "Conditions d'utilisation",
-    "address": "Rue Amirouche, Alger, Algérie"
+    "address": "Hai Gaaloul, Bordj El Bahri 16046"
 
   }
 }

@@ -10,21 +10,29 @@ export interface OrderItem {
   wilaya?: string;
   address?: string;
 }
+
+// Cache user data to avoid repeated localStorage access
+let cachedUserData: any = null;
+
 export const submitOrder = async (items: OrderItem | OrderItem[]) => {
-  const userData = JSON.parse(localStorage.getItem("userData") || "{}");
-  
+  // Get user data once and cache it
+  if (!cachedUserData) {
+    cachedUserData = JSON.parse(localStorage.getItem("userData") || "{}");
+  }
+
   const basePayload = {
-    name: userData.name || "Client inconnu",
-    email: userData.email || "",
-    phone: userData.phone || "Non fourni",
-    wilaya: userData.wilaya || "Non spécifiée",
-    address: userData.address || "Non spécifiée"
+    name: cachedUserData.name || "Client inconnu",
+    email: cachedUserData.email || "",
+    phone: cachedUserData.phone || "Non fourni",
+    wilaya: cachedUserData.wilaya || "Non spécifiée",
+    address: cachedUserData.address || "Non spécifiée"
   };
 
   try {
     const orders = Array.isArray(items) ? items : [items];
     const timestamp = new Date().toISOString();
     
+    // Prepare all orders at once
     const ordersWithDate = orders.map(item => ({
       ...basePayload,
       ...item,
@@ -32,10 +40,40 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
       image: item.image || '/placeholder-product.jpg'
     }));
     
+    // Update localStorage in one operation
     const existingOrders = JSON.parse(localStorage.getItem("userOrders") || "[]");
     localStorage.setItem("userOrders", JSON.stringify([...existingOrders, ...ordersWithDate]));
     
-    for (const item of orders) {
+    // Use Promise.all for parallel requests if multiple items
+    if (orders.length > 1) {
+      const responses = await Promise.all(
+        orders.map(item => {
+          const fullPayload = {
+            ...basePayload,
+            productname: item.productname,
+            id: item.id,
+            price: item.price,
+            quantity: item.quantity
+          };
+
+          return fetch("https://script.google.com/macros/s/AKfycbzD7upin5Kbl8z8axksNvfZeIKnAVFLdkuNiegJ4qLOf5H-DDDaNUgzNGW4xpsh3fjJ8g/exec", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: JSON.stringify(fullPayload),
+          });
+        })
+      );
+
+      // Check all responses
+      const allSuccessful = responses.every(response => response.ok);
+      if (!allSuccessful) {
+        throw new Error("Some orders failed to submit");
+      }
+    } else {
+      // Single item case
+      const item = orders[0];
       const fullPayload = {
         ...basePayload,
         productname: item.productname,
@@ -55,8 +93,6 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
-      console.log("Commande envoyée :", await response.text());
     }
 
     toast.success("Commande(s) bien enregistrée(s) !");
@@ -70,8 +106,10 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
 
 export const getLocalOrders = (): OrderItem[] => {
   try {
-    const userData = JSON.parse(localStorage.getItem("userData") || "{}");
-    const userEmail = userData.email;
+    if (!cachedUserData) {
+      cachedUserData = JSON.parse(localStorage.getItem("userData") || "{}");
+    }
+    const userEmail = cachedUserData.email;
     
     if (!userEmail) return [];
     

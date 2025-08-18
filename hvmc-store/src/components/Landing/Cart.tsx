@@ -6,6 +6,7 @@ import { submitOrder } from '@/api/serviceOrders';
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { useState } from 'react';
+import { FaSpinner } from 'react-icons/fa';
 
 interface UserData {
   name: string;
@@ -19,6 +20,7 @@ export const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity, cartCount, clearCart } = useCart();
   const { t } = useTranslation();
   const [showOrderForm, setShowOrderForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [userData, setUserData] = useState<UserData>({
     name: '',
     email: '',
@@ -28,12 +30,12 @@ export const Cart = () => {
   });
 
   const total = cartItems.reduce(
-    (sum, item) => sum + (parseFloat(item.price.replace(',', '.')) * item.quantity),
+    (sum, item) => sum + (parseFloat(item.price.replace(',', '.'))) * item.quantity,
     0
   ).toFixed(2).replace('.', ',');
 
   const showSuccessAlert = () => {
-    toast.custom((t) => (
+    toast.custom(() => (
       <div className="bg-white rounded-lg shadow-xl p-4 border border-green-300 max-w-md">
         <div className="flex items-start">
           <div className="flex-shrink-0">
@@ -42,24 +44,17 @@ export const Cart = () => {
             </svg>
           </div>
           <div className="ml-3">
-            <h3 className="text-lg font-medium text-gray-900">Commande confirmée!</h3>
+            <h3 className="text-lg font-medium text-gray-900">{t('order.successTitle')}</h3>
             <div className="mt-2 text-sm text-gray-500">
-              <p>Votre commande a été envoyée avec succès.</p>
-              <p className="mt-1">Nous vous contacterons bientôt pour confirmation.</p>
-            </div>
-            <div className="mt-4">
-              <button
-                type="button"
-                className="bg-green-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-green-600 focus:outline-none"
-                onClick={() => toast.dismiss(t)}
-              >
-                Compris
-              </button>
+              <p>{t('order.successMessage')}</p>
+              <p className="mt-1">{t('order.successContact')}</p>
             </div>
           </div>
         </div>
       </div>
-    ));
+    ), {
+      duration: 3000
+    });
   };
 
   const handleOrderAll = async () => {
@@ -78,35 +73,38 @@ export const Cart = () => {
   };
 
   const proceedWithOrder = async () => {
+    setIsSubmitting(true);
     const orderItems = cartItems.map(item => ({
       productname: item.name,
       id: item.id,
       price: item.price.replace(' DA', ''),
       quantity: item.quantity,
+      wilaya: userData.wilaya
     }));
 
-    const success = await submitOrder(orderItems);
-    
-    if (success) {
+    try {
+      await submitOrder(orderItems);
       clearCart();
       showSuccessAlert();
-    } else {
+    } catch (error) {
       toast.error(t('errors.orderFailed'), {
-        description: 'Une erreur est survenue lors de la soumission de votre commande.',
+        description: t('errors.orderFailedDescription'),
         style: {
           background: '#FF3333',
           color: 'white'
         }
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const handleUserDataSubmit = (e: React.FormEvent) => {
+  const handleUserDataSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!userData.name || !userData.phone || !userData.wilaya) {
       toast.error(t('errors.missingFields'), {
-        description: 'Veuillez remplir tous les champs obligatoires.',
+        description: t('errors.missingFieldsDescription'),
         style: {
           background: '#FF3333',
           color: 'white'
@@ -117,7 +115,7 @@ export const Cart = () => {
     
     localStorage.setItem("userData", JSON.stringify(userData));
     setShowOrderForm(false);
-    proceedWithOrder();
+    await proceedWithOrder();
   };
 
   return (
@@ -197,24 +195,32 @@ export const Cart = () => {
             <Button 
               className="w-full mb-4 bg-[#d6b66d] hover:bg-[#c9a95d] text-black"
               onClick={handleOrderAll}
+              disabled={isSubmitting}
             >
-              {t('cart.orderAll')}
+              {isSubmitting ? (
+                <>
+                  <FaSpinner className="mr-2 h-4 w-4 animate-spin" />
+                  {t('order.submitting')}
+                </>
+              ) : (
+                t('cart.orderAll')
+              )}
             </Button>
           </div>
         </div>
       )}
 
-      {showOrderForm && (
+{showOrderForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4 text-gray-900">Informations de contact</h2>
-            <p className="mb-4 text-gray-600">Veuillez fournir vos informations pour finaliser la commande</p>
+          <div className="bg-white rounded-lg p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <h2 className="text-xl font-bold mb-4 text-gray-900">{t('orderForm.title')}</h2>
+            <p className="mb-4 text-gray-600">{t('orderForm.description')}</p>
             
             <form onSubmit={handleUserDataSubmit}>
               <div className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-900">
-                    Nom complet *
+                    {t('orderForm.name')} *
                   </label>
                   <input
                     type="text"
@@ -223,12 +229,13 @@ export const Cart = () => {
                     onChange={(e) => setUserData({...userData, name: e.target.value})}
                     className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 
                 <div>
                   <label htmlFor="wilaya" className="block text-sm font-medium text-gray-900">
-                    Wilaya *
+                    {t('orderForm.wilaya')} *
                   </label>
                   <select
                     id="wilaya"
@@ -236,8 +243,9 @@ export const Cart = () => {
                     onChange={(e) => setUserData({...userData, wilaya: e.target.value})}
                     className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
                     required
+                    disabled={isSubmitting}
                   >
-                    <option value="">Sélectionnez votre wilaya</option>
+                    <option value="">{t('orderForm.selectWilaya')}</option>
                     <option value="Adrar">Adrar</option>
                     <option value="Chlef">Chlef</option>
                     <option value="Laghouat">Laghouat</option>
@@ -285,47 +293,41 @@ export const Cart = () => {
                     <option value="Naâma">Naâma</option>
                     <option value="Aïn Témouchent">Aïn Témouchent</option>
                     <option value="Ghardaïa">Ghardaïa</option>
-                    <option value="Relizane">Relizane</option>
-                  </select>
+                    <option value="Relizane">Relizane</option>                  </select>
                 </div>
                 
                 <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-900">
+                    {t('orderForm.phone')} *
+                  </label>
+                  <input
+  type="tel"
+  id="phone"
+  value={userData.phone}
+  onChange={(e) => {
+    // Only allow numbers and limit to 10 digits
+    const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+    setUserData({...userData, phone: value});
+  }}
+  className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
+  required
+  disabled={isSubmitting}
+  pattern="[0-9]{10}"
+  inputMode="numeric"
+/>
+                </div>
+
+                <div>
                   <label htmlFor="address" className="block text-sm font-medium text-gray-900">
-                    Adresse complète
+                    {t('orderForm.address')}
                   </label>
                   <textarea
                     id="address"
                     value={userData.address || ''}
                     onChange={(e) => setUserData({...userData, address: e.target.value})}
                     className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
-                    rows={3}
-                  />
-                </div>
-                
-                <div className="hidden">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-900">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={userData.email}
-                    onChange={(e) => setUserData({...userData, email: e.target.value})}
-                    className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-900">
-                    Téléphone *
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    value={userData.phone}
-                    onChange={(e) => setUserData({...userData, phone: e.target.value})}
-                    className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 bg-white"
-                    required
+                    rows={2}
+                    disabled={isSubmitting}
                   />
                 </div>
               </div>
@@ -334,16 +336,25 @@ export const Cart = () => {
                 <Button
                   type="button"
                   variant="outline"
-                  className="text-gray-900 border-gray-300 hover:bg-gray-100"
+                  className="text-gray-900 border-gray-300 hover:bg-gray-100 text-sm sm:text-base"
                   onClick={() => setShowOrderForm(false)}
+                  disabled={isSubmitting}
                 >
-                  Annuler
+                  {t('common.cancel')}
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-[#d6b66d] hover:bg-[#c9a95d] text-gray-900"
+                  className="bg-[#d6b66d] hover:bg-[#c9a95d] text-gray-900 text-sm sm:text-base"
+                  disabled={isSubmitting}
                 >
-                  Confirmer la commande
+                  {isSubmitting ? (
+                    <>
+                      <FaSpinner className="mr-2 h-4 w-4 animate-spin" />
+                      {t('order.submitting')}
+                    </>
+                  ) : (
+                    t('orderForm.submitOrder')
+                  )}
                 </Button>
               </div>
             </form>
