@@ -58,8 +58,9 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
 
           return fetch("https://script.google.com/macros/s/AKfycbx_D69QUpLpkhzIiSgo4g3EJtG30-fn-BQpJtVrG82EZm5uXMHmSzfWgWaAJ5U-GsPkgw/exec", {
             method: "POST",
+            mode: "no-cors", // Add this to handle CORS differently
             headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
+              "Content-Type": "application/json", // Changed from x-www-form-urlencoded
             },
             body: JSON.stringify(fullPayload),
           });
@@ -84,8 +85,9 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
 
       const response = await fetch("https://script.google.com/macros/s/AKfycbx_D69QUpLpkhzIiSgo4g3EJtG30-fn-BQpJtVrG82EZm5uXMHmSzfWgWaAJ5U-GsPkgw/exec", {
         method: "POST",
+        mode: "no-cors", // Add this to handle CORS differently
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json", // Changed from x-www-form-urlencoded
         },
         body: JSON.stringify(fullPayload),
       });
