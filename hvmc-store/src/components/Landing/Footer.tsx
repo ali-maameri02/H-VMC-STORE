@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Instagram, Facebook, Phone, Mail, MapPin } from 'lucide-react';
 import '@/lib/rtl.css'
+import { FaTiktok } from 'react-icons/fa';
 
 export const Footer = () => {
   const { t, i18n } = useTranslation();
@@ -483,6 +484,15 @@ export const Footer = () => {
               >
                 <Facebook className="h-5 w-5" />
               </a>
+              <a
+  href="https://www.tiktok.com/@hamza_hvmc?_t=ZS-8yxWaAzR9g8&_r=1"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-zinc-300 hover:text-[#d6b66d] transition-colors"
+  aria-label="Visit TikTok"
+>
+  <FaTiktok className="h-5 w-5" />
+</a>
             </div>
           </div>
 

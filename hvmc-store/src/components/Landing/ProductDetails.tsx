@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { submitOrder } from '@/api/serviceOrders';
 import { useTranslation } from "react-i18next";
 import { Footer } from "./Footer";
-
+import { FaTiktok } from 'react-icons/fa';
 
 interface UserData {
   name: string;
@@ -84,24 +84,55 @@ export const ProductDetails = () => {
             <p>{t('order.successMessage', { product: product?.name })}</p>
             <p className="mt-1">{t('order.successContact')}</p>
           </div>
-          <div className="mt-4 flex gap-2">
-            <button
-              type="button"
-              className="bg-green-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-green-600 focus:outline-none"
-              onClick={() => toast.dismiss(toastId)} // Changed from t to toastId
-            >
-              {t('common.ok')}
-            </button>
-            <a 
-              href="https://wa.me/213541779717" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#25D366] text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-[#128C7E] focus:outline-none"
-              onClick={() => toast.dismiss(toastId)} // Changed from t to toastId
-            >
-              WhatsApp
-            </a>
-          </div>
+          <div className=" flex flex-col gap-3">
+  <a 
+    href="https://wa.me/213541779717" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition-colors animate-float"
+    aria-label="Chat on WhatsApp"
+  >
+    <MessageSquare className="h-6 w-6" />
+  </a>
+  
+  <a
+    href="https://m.me/100069071041741"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors animate-float delay-100"
+    aria-label="Chat on Facebook"
+  >
+    <MessageSquare className="h-6 w-6" />
+  </a>
+  
+  <a
+    href="https://www.instagram.com/hamza_hvmc"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-full shadow-lg hover:opacity-90 transition-colors animate-float delay-200"
+    aria-label="Visit Instagram"
+  >
+    <Instagram className="h-6 w-6" />
+  </a>
+
+  {/* Add TikTok link here */}
+  <a
+  href="https://www.tiktok.com/@your_tiktok_username"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="bg-black text-white p-3 rounded-full shadow-lg hover:bg-gray-800 transition-colors animate-float delay-300"
+  aria-label="Visit TikTok"
+>
+  <FaTiktok className="h-6 w-6" />
+</a>
+  <a
+    href="tel:+213541779717"
+    className="bg-[#d6b66d] text-black p-3 rounded-full shadow-lg hover:bg-[#c9a95d] transition-colors animate-float delay-400"
+    aria-label="Call us"
+  >
+    <Phone className="h-6 w-6" />
+  </a>
+</div>
         </div>
       </div>
     </div>
@@ -251,6 +282,15 @@ const handleAddToCart = () => {
           >
             <Instagram className="h-6 w-6" />
           </a>
+          <a
+  href="https://www.tiktok.com/@hamza_hvmc?_t=ZS-8yxWaAzR9g8&_r=1"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="bg-black text-white p-3 rounded-full shadow-lg hover:bg-gray-800 transition-colors animate-float delay-300"
+  aria-label="Visit TikTok"
+>
+  <FaTiktok className="h-6 w-6" />
+</a>
           
           <a
             href="tel:+213541779717"
