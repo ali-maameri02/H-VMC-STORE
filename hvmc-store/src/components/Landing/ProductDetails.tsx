@@ -70,7 +70,7 @@ export const ProductDetails = () => {
  // [Previous imports remain the same...]
 
  const showProductSuccessAlert = () => {
-  toast.custom((toastId) => ( // Changed parameter name from 't' to 'toastId' to avoid conflict
+  toast.custom((_toastId) => ( // Changed parameter name from 't' to 'toastId' to avoid conflict
     <div className="bg-white rounded-lg shadow-xl p-4 border border-green-300 max-w-md">
       <div className="flex items-start">
         <div className="flex-shrink-0">
