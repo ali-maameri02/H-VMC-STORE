@@ -118,3 +118,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom scrollbar for thumbnails */
+.thumbnails-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.thumbnails-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.thumbnails-container::-webkit-scrollbar-thumb {
+  background: #d6b66d;
+  border-radius: 2px;
+}
+
+.thumbnails-container::-webkit-scrollbar-thumb:hover {
+  background: #c9a95d;
+}

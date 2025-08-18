@@ -10,7 +10,8 @@ import { useTranslation } from "react-i18next";
 import { Footer } from "./Footer";
 import { FaTiktok } from 'react-icons/fa';
 import { FaSpinner } from 'react-icons/fa';
-
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import '../../index.css'
 interface UserData {
   name: string;
   email: string;
@@ -231,7 +232,28 @@ export const ProductDetails = () => {
     setShowOrderForm(false);
     await proceedWithOrder();
   };
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Get current image (fallback to main image if no images array)
+  const currentImage = product?.images?.[currentImageIndex]?.image || product?.image;
 
+  const handleNextImage = () => {
+    if (!product?.images) return;
+    setCurrentImageIndex((prev) => 
+      prev === product.images.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const handlePrevImage = () => {
+    if (!product?.images) return;
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? product.images.length - 1 : prev - 1
+    );
+  };
+
+  const handleThumbnailClick = (index: number) => {
+    setCurrentImageIndex(index);
+  };
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
@@ -310,24 +332,49 @@ export const ProductDetails = () => {
         </Button>
         
         <div className="grid md:grid-cols-2 gap-8">
-          <div 
-            className="relative rounded-lg overflow-hidden bg-white"
+          <div className="grid grid-cols gap-8">
+        <div 
+            className="relative rounded-lg overflow-hidden bg-white h-96 "
             onMouseEnter={() => setShowZoom(true)}
             onMouseLeave={() => setShowZoom(false)}
             onMouseMove={handleMouseMove}
           >
             <img
               ref={imgRef}
-              src={product.image}
+              src={currentImage}
               alt={product.name}
-              className="w-full h-auto object-cover cursor-crosshair"
+              className="w-full h-full object-contain cursor-crosshair"
             />
+                {product.images && product.images.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrevImage();
+                  }}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/75 transition-colors"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNextImage();
+                  }}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/75 transition-colors"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </button>
+              </>
+            )}
             
             {showZoom && (
               <div 
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                  backgroundImage: `url(${product.image})`,
+                  backgroundImage: `url(${currentImage})`,  // Changed from product.image to currentImage
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: `${imgRef.current?.offsetWidth ? imgRef.current.offsetWidth * 2 : 0}px ${imgRef.current?.offsetHeight ? imgRef.current.offsetHeight * 2 : 0}px`,
                   ...zoomStyle
@@ -343,7 +390,7 @@ export const ProductDetails = () => {
                   left: `${cursorPos.x}%`,
                   top: `${cursorPos.y}%`,
                   transform: 'translate(-50%, -50%)',
-                  backgroundImage: `url(${product.image})`,
+                  backgroundImage: `url(${currentImage})`,  // Changed from product.image to currentImage
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: `${imgRef.current?.offsetWidth ? imgRef.current.offsetWidth * 2 : 0}px ${imgRef.current?.offsetHeight ? imgRef.current.offsetHeight * 2 : 0}px`,
                   backgroundPosition: `${cursorPos.x}% ${cursorPos.y}%`,
@@ -351,7 +398,30 @@ export const ProductDetails = () => {
               />
             )}
           </div>
-
+         
+             {product.images && product.images.length > 1 && (
+            <div className="flex gap-2 overflow-x-auto py-2">
+              {product.images.map((img, index) => (
+                <button
+                  key={img.id}
+                  onClick={() => handleThumbnailClick(index)}
+                  className={`flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 ${
+                    currentImageIndex === index 
+                      ? 'border-[#d6b66d]' 
+                      : 'border-transparent'
+                  }`}
+                  aria-label={`View image ${index + 1}`}
+                >
+                  <img
+                    src={img.image}
+                    alt={`${product.name} - ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
+</div>
           <div className="space-y-6">
             <h1 className="text-3xl font-bold">{product.name}</h1>
             <p className="text-white text-2xl font-bold">{product.price} DA</p>

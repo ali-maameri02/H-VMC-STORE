@@ -10,8 +10,8 @@ class Order(models.Model):
     is_sent = models.BooleanField(default=False, verbose_name=_("Is Sent"))
 
     class Meta:
-        verbose_name = _("Order")
-        verbose_name_plural = _("Orders")
+        verbose_name = _("Commande")
+        verbose_name_plural = _("Commandes")
 
     def __str__(self):
         return _("Order #%(id)s by %(client)s") % {"id": self.id, "client": self.client}

@@ -2,7 +2,11 @@
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/fr/api';
-
+export interface ProductImage {
+  id: number;
+  image: string;
+  order: number;
+}
 export interface Product {
   id: number;
   name: string;
@@ -10,7 +14,8 @@ export interface Product {
   price: string;
   is_available: boolean;
   created_at: string;
-  image: string;
+  image: string;  // Main image (fallback)
+  images: ProductImage[];
   category: {
     id: number;
     name: string;

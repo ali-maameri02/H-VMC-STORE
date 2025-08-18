@@ -198,7 +198,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 JAZZMIN_SETTINGS = {
     # title of the window
     "site_title": "Admin Panel",
-    
+        "site_brand": "HVMC",
+
     # Title on the brand, and the login screen (19 chars max)
     "site_header": "Admin",
     
@@ -209,7 +210,7 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "Welcome to the admin panel",
     
     # Copyright on the footer
-    "copyright": "Your Company",
+    "copyright": "HVMC Coiffure",
     
     # Field name on user model that contains avatar image
     "user_avatar": None,
@@ -263,14 +264,14 @@ JAZZMIN_SETTINGS = {
     "order_with_respect_to": ["accounts", "catalog", "orders"],
     
     # Custom links to append to app groups, keyed on app name
-    "custom_links": {
-        "orders": [{
-            "name": "Make Messages", 
-            "url": "make_messages", 
-            "icon": "fas fa-comments",
-            "permissions": ["orders.view_order"]
-        }]
-    },
+    # "custom_links": {
+    #     "orders": [{
+    #         "name": "Make Messages", 
+    #         "url": "make_messages", 
+    #         "icon": "fas fa-comments",
+    #         "permissions": ["orders.view_order"]
+    #     }]
+    # },
     
     # Custom icons for side menu apps/models
     "icons": {
@@ -322,7 +323,7 @@ JAZZMIN_SETTINGS = {
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
     
     # Add a language dropdown into the admin
-    "language_chooser": True,
+    # "language_chooser": True,
 }
 
 # Jazzmin UI localization for French and Arabic

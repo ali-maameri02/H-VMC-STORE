@@ -1,7 +1,7 @@
 # pylint: disable=no-member
 from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _  
-from .models import Category, Product
+from .models import Category, Product, ProductImage
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -13,7 +13,14 @@ class CategorySerializer(serializers.ModelSerializer):
             'description': {'label': _("Description")},
             'image': {'label': _("Image")},
         }
-
+# serializers.py
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ['id', 'image', 'order']
+        extra_kwargs = {
+            'image': {'label': _("Image")},
+        }
 
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True, label=_("Category"))
@@ -23,14 +30,16 @@ class ProductSerializer(serializers.ModelSerializer):
         write_only=True,
         label=_("Category")
     )
+    images = ProductImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
         fields = [
             'id', 'name', 'description', 'price',
             'is_available', 'created_at', 'image',
-            'category', 'category_id'
+            'category', 'category_id', 'images'
         ]
+
         extra_kwargs = {
             'name': {'label': _("Product Name")},
             'description': {'label': _("Description")},

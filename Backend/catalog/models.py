@@ -25,7 +25,29 @@ class Category(models.Model):
 
     def __str__(self):
         return str(self.name)
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        'Product',
+        related_name='images',
+        on_delete=models.CASCADE,
+        verbose_name=_("Produit")
+    )
+    image = models.ImageField(
+        upload_to='product_images/',
+        verbose_name=_("Image")
+    )
+    order = models.PositiveIntegerField(
+        default=0,
+        verbose_name=_("Ordre d'affichage")
+    )
 
+    class Meta:
+        ordering = ['order']
+        verbose_name = _("Image du produit")
+        verbose_name_plural = _("Images du produit")
+
+    def __str__(self):
+        return f"Image {self.id} for {self.product.name}"
 
 class Product(models.Model):
     category = models.ForeignKey(
@@ -59,12 +81,12 @@ class Product(models.Model):
         upload_to='product_images/',
         null=True,
         blank=True,
-        verbose_name=_("Image")
+        verbose_name=_("Main Image")  # Optional: keep as fallback
     )
 
     class Meta:
-        verbose_name = _("Product")
-        verbose_name_plural = _("Products")
+        verbose_name = _("Produit")
+        verbose_name_plural = _("Produits")
 
     def __str__(self):
         return str(self.name)
