@@ -56,7 +56,7 @@ export const submitOrder = async (items: OrderItem | OrderItem[]) => {
             quantity: item.quantity
           };
 
-          return fetch("https://script.google.com/macros/s/AKfycbzD7upin5Kbl8z8axksNvfZeIKnAVFLdkuNiegJ4qLOf5H-DDDaNUgzNGW4xpsh3fjJ8g/exec", {
+          return fetch("https://script.google.com/macros/s/AKfycbx_D69QUpLpkhzIiSgo4g3EJtG30-fn-BQpJtVrG82EZm5uXMHmSzfWgWaAJ5U-GsPkgw/exec", {
             method: "POST",
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
